@@ -9,20 +9,12 @@ const nextConfig = {
     unoptimized: true,
   },
   
-  // Disable SWC for WebContainer compatibility
-  swcMinify: false,
+  // Ensure proper asset prefix for static export
+  assetPrefix: '',
   
-  // Use Babel instead of SWC
+  // Disable server-side features for static export
   experimental: {
-    forceSwcTransforms: false,
-  },
-  
-  // Disable webpack cache to avoid issues
-  webpack: (config, { dev, isServer }) => {
-    // Disable webpack cache in WebContainer
-    config.cache = false;
-    
-    return config;
+    appDir: true,
   },
 }
 
