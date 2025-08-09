@@ -4,16 +4,16 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "turbo lint",
-    "test": "turbo test",
-    "typecheck": "turbo typecheck",
-    "clean": "turbo clean",
+    "build": "npx turbo build",
+    "dev": "npx turbo dev",
+    "lint": "npx turbo lint",
+    "test": "npx turbo test",
+    "typecheck": "npx turbo typecheck",
+    "clean": "npx turbo clean",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "db:generate": "turbo db:generate",
-    "db:push": "turbo db:push",
-    "db:seed": "turbo db:seed"
+    "db:generate": "npx turbo db:generate",
+    "db:push": "npx turbo db:push",
+    "db:seed": "npx turbo db:seed"
   },
   "devDependencies": {
     "@turbo/gen": "^1.11.2",
