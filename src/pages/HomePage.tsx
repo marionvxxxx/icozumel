@@ -1,5 +1,6 @@
 import React from 'react';
 import { TrendingUp, Star, MapPin } from 'lucide-react';
+import ResponsiveLayout from '../components/Layout/ResponsiveLayout';
 import BusinessCard from '../components/Business/BusinessCard';
 import PostCard from '../components/Feed/PostCard';
 import NotificationBanner from '../components/Common/NotificationBanner';
@@ -7,9 +8,12 @@ import PointsDisplay from '../components/Gamification/PointsDisplay';
 import AROverlay from '../components/Tourism/AROverlay';
 import { mockBusinesses, mockPosts } from '../data/mockData';
 import { useAuth } from '../hooks/useAuth';
+import { isMobile, isDesktop } from '../utils/responsive';
 
 const HomePage: React.FC = () => {
   const { user } = useAuth();
+  const mobile = isMobile();
+  const desktop = isDesktop();
   const featuredBusinesses = mockBusinesses.filter(b => b.isFeatured);
   const recentPosts = mockPosts.slice(0, 3);
 
@@ -19,10 +23,10 @@ const HomePage: React.FC = () => {
     { action: 'Shared local event', points: 3, timestamp: '2 days ago' }
   ];
   return (
-    <div className="pb-20 bg-gray-50 min-h-screen">
+    <div className={`${mobile ? 'pb-20' : ''} bg-gray-50 min-h-screen`}>
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-primary-500 to-secondary-600 text-white p-6 rounded-b-3xl">
-        <div className="max-w-md mx-auto">
+      <div className={`bg-gradient-to-br from-primary-500 to-secondary-600 text-white ${mobile ? 'p-6 rounded-b-3xl' : 'p-8 rounded-xl mb-6'}`}>
+        <ResponsiveLayout>
           <h2 className="text-2xl font-bold mb-2">Discover Local Gems</h2>
           <p className="text-primary-100 mb-4">
             Find amazing businesses, events, and experiences in your area
@@ -43,10 +47,10 @@ const HomePage: React.FC = () => {
               <div className="text-xs text-primary-100">Reviews</div>
             </div>
           </div>
-        </div>
+        </ResponsiveLayout>
       </div>
 
-      <div className="max-w-md mx-auto px-4 space-y-6 mt-6">
+      <ResponsiveLayout className={`${mobile ? 'px-4' : 'px-0'} space-y-6 ${mobile ? 'mt-6' : 'mt-0'}`}>
         {/* Welcome Banner for New Users */}
         {!user && (
           <NotificationBanner
@@ -154,7 +158,7 @@ const HomePage: React.FC = () => {
             />
           </div>
         )}
-      </div>
+      </ResponsiveLayout>
     </div>
   );
 };

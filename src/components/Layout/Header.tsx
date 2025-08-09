@@ -1,6 +1,8 @@
 import React from 'react';
 import { Bell, MapPin, Crown } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
+import { isMobile } from '../../utils/responsive';
+import ResponsiveLayout from './ResponsiveLayout';
 
 interface HeaderProps {
   title: string;
@@ -14,10 +16,12 @@ const Header: React.FC<HeaderProps> = ({
   showNotifications = true 
 }) => {
   const { user } = useAuth();
+  const mobile = isMobile();
 
   return (
-    <div className="bg-white border-b border-gray-200 px-4 py-3 sticky top-0 z-40">
-      <div className="flex items-center justify-between max-w-md mx-auto">
+    <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
+      <ResponsiveLayout className="px-4 py-3">
+        <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center">
@@ -25,7 +29,7 @@ const Header: React.FC<HeaderProps> = ({
             </div>
             <div>
               <h1 className="text-lg font-bold text-gray-900">{title}</h1>
-              {showLocation && (
+              {showLocation && mobile && (
                 <div className="flex items-center text-xs text-gray-500">
                   <MapPin size={12} className="mr-1" />
                   <span>Seaside Town, CA</span>
@@ -50,7 +54,8 @@ const Header: React.FC<HeaderProps> = ({
             </button>
           )}
         </div>
-      </div>
+        </div>
+      </ResponsiveLayout>
     </div>
   );
 };

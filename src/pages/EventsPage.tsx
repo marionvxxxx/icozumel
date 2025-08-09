@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { Calendar, Filter, Plus } from 'lucide-react';
+import ResponsiveLayout from '../components/Layout/ResponsiveLayout';
 import EventCard from '../components/Events/EventCard';
 import ItineraryBuilder from '../components/Tourism/ItineraryBuilder';
 import NotificationBanner from '../components/Common/NotificationBanner';
 import { mockEvents } from '../data/mockData';
 import { useAuth } from '../hooks/useAuth';
+import { isMobile } from '../utils/responsive';
 
 const EventsPage: React.FC = () => {
   const { user } = useAuth();
+  const mobile = isMobile();
   const [selectedFilter, setSelectedFilter] = useState('All');
   const [showFilters, setShowFilters] = useState(false);
   const [showItinerary, setShowItinerary] = useState(false);
@@ -23,8 +26,8 @@ const EventsPage: React.FC = () => {
   );
 
   return (
-    <div className="pb-20 bg-gray-50 min-h-screen">
-      <div className="max-w-md mx-auto px-4 py-4 space-y-4">
+    <div className={`${mobile ? 'pb-20' : ''} bg-gray-50 min-h-screen`}>
+      <ResponsiveLayout className={`${mobile ? 'px-4' : 'px-0'} py-4 space-y-4`}>
         {/* Itinerary Promotion */}
         {user && !showItinerary && (
           <NotificationBanner
@@ -194,7 +197,7 @@ const EventsPage: React.FC = () => {
             <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-white/5 rounded-full"></div>
           </div>
         )}
-      </div>
+      </ResponsiveLayout>
     </div>
   );
 };

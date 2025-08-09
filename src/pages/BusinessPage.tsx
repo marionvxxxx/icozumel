@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { Plus, BarChart3, Settings, Crown, TrendingUp } from 'lucide-react';
+import ResponsiveLayout from '../components/Layout/ResponsiveLayout';
+import { isMobile } from '../utils/responsive';
 
 const BusinessPage: React.FC = () => {
+  const mobile = isMobile();
   const [activeTab, setActiveTab] = useState('dashboard');
 
   const adTypes = [
@@ -32,8 +35,8 @@ const BusinessPage: React.FC = () => {
   ];
 
   return (
-    <div className="pb-20 bg-gray-50 min-h-screen">
-      <div className="max-w-md mx-auto px-4 py-4 space-y-4">
+    <div className={`${mobile ? 'pb-20' : ''} bg-gray-50 min-h-screen`}>
+      <ResponsiveLayout className={`${mobile ? 'px-4' : 'px-0'} py-4 space-y-4`}>
         {/* Header */}
         <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl p-6">
           <h1 className="text-2xl font-bold mb-2">Business Hub</h1>
@@ -202,7 +205,7 @@ const BusinessPage: React.FC = () => {
             <button className="w-full btn-primary">Save Changes</button>
           </div>
         )}
-      </div>
+      </ResponsiveLayout>
     </div>
   );
 };

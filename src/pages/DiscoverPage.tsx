@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Search, Filter, MapPin, Grid, List } from 'lucide-react';
+import ResponsiveLayout from '../components/Layout/ResponsiveLayout';
 import BusinessCard from '../components/Business/BusinessCard';
 import SearchBar from '../components/Common/SearchBar';
 import LoadingSpinner from '../components/Common/LoadingSpinner';
 import { mockBusinesses } from '../data/mockData';
+import { isMobile } from '../utils/responsive';
 
 const DiscoverPage: React.FC = () => {
+  const mobile = isMobile();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -29,8 +32,8 @@ const DiscoverPage: React.FC = () => {
   });
 
   return (
-    <div className="pb-20 bg-gray-50 min-h-screen">
-      <div className="max-w-md mx-auto px-4 py-4 space-y-4">
+    <div className={`${mobile ? 'pb-20' : ''} bg-gray-50 min-h-screen`}>
+      <ResponsiveLayout className={`${mobile ? 'px-4' : 'px-0'} py-4 space-y-4`}>
         {/* Search Bar */}
         <SearchBar
           placeholder="Search businesses, services..."
@@ -174,7 +177,7 @@ const DiscoverPage: React.FC = () => {
             ))}
           </div>
         </div>
-      </div>
+      </ResponsiveLayout>
     </div>
   );
 };

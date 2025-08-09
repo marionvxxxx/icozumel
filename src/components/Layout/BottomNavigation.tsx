@@ -1,5 +1,6 @@
 import React from 'react';
 import { Home, Search, Calendar, User, Building2 } from 'lucide-react';
+import { isMobile } from '../../utils/responsive';
 
 interface BottomNavigationProps {
   activeTab: string;
@@ -7,6 +8,7 @@ interface BottomNavigationProps {
 }
 
 const BottomNavigation: React.FC<BottomNavigationProps> = ({ activeTab, onTabChange }) => {
+  const mobile = isMobile();
   const tabs = [
     { id: 'home', label: 'Home', icon: Home },
     { id: 'discover', label: 'Discover', icon: Search },
@@ -16,7 +18,10 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({ activeTab, onTabCha
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2 z-50">
+    <div className={`
+      ${mobile ? 'fixed bottom-0 left-0 right-0' : 'hidden'} 
+      bg-white border-t border-gray-200 px-4 py-2 z-50
+    `}>
       <div className="flex justify-around items-center max-w-md mx-auto">
         {tabs.map((tab) => {
           const Icon = tab.icon;
@@ -26,14 +31,14 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({ activeTab, onTabCha
             <button
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
-              className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors duration-200 ${
+              className={`flex flex-col items-center py-2 px-2 rounded-lg transition-colors duration-200 ${
                 isActive
                   ? 'text-primary-600 bg-primary-50'
                   : 'text-gray-500 hover:text-gray-700'
               }`}
             >
-              <Icon size={20} className="mb-1" />
-              <span className="text-xs font-medium">{tab.label}</span>
+              <Icon size={mobile ? 20 : 24} className="mb-1" />
+              <span className={`${mobile ? 'text-xs' : 'text-sm'} font-medium`}>{tab.label}</span>
             </button>
           );
         })}
