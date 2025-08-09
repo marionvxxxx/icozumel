@@ -13,11 +13,10 @@ const nextConfig = {
     domains: ['images.unsplash.com', 'images.pexels.com'],
   },
   
-  // Transpile workspace packages
-  transpilePackages: ['@cozumel/ui', '@cozumel/database', '@cozumel/i18n'],
-  
   // Output configuration for better deployment
-  output: 'standalone',
+  output: 'export',
+  trailingSlash: true,
+  distDir: 'out',
   
   // Disable webpack cache to avoid issues
   webpack: (config, { dev, isServer }) => {
