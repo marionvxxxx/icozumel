@@ -12,41 +12,11 @@ import {
 } from 'native-base';
 
 const menuItems = [
-  {
-    id: '1',
-    title: 'Mi Negocio',
-    subtitle: 'Administra tu negocio',
-    icon: '🏪',
-    action: 'business',
-  },
-  {
-    id: '2',
-    title: 'Favoritos',
-    subtitle: 'Lugares guardados',
-    icon: '❤️',
-    action: 'favorites',
-  },
-  {
-    id: '3',
-    title: 'Historial',
-    subtitle: 'Reservas anteriores',
-    icon: '📋',
-    action: 'history',
-  },
-  {
-    id: '4',
-    title: 'Configuración',
-    subtitle: 'Preferencias de la app',
-    icon: '⚙️',
-    action: 'settings',
-  },
-  {
-    id: '5',
-    title: 'Ayuda',
-    subtitle: 'Soporte y preguntas',
-    icon: '❓',
-    action: 'help',
-  },
+  { id: '1', title: 'Mi Negocio', subtitle: 'Administra tu negocio', icon: '🏪' },
+  { id: '2', title: 'Favoritos', subtitle: 'Lugares guardados', icon: '❤️' },
+  { id: '3', title: 'Historial', subtitle: 'Reservas anteriores', icon: '📋' },
+  { id: '4', title: 'Configuración', subtitle: 'Preferencias de la app', icon: '⚙️' },
+  { id: '5', title: 'Ayuda', subtitle: 'Soporte y preguntas', icon: '❓' },
 ];
 
 export default function ProfileScreen() {
@@ -58,12 +28,9 @@ export default function ProfileScreen() {
         <VStack space={6} p={4}>
           {/* Profile Header */}
           <VStack alignItems="center" space={4}>
-            <Avatar
-              size="xl"
-              source={{
-                uri: 'https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?w=150&h=150&fit=crop&crop=face',
-              }}
-            />
+            <Avatar size="xl" bg="primary.500">
+              CR
+            </Avatar>
             <VStack alignItems="center" space={1}>
               <Text fontSize="2xl" fontWeight="bold">
                 Carlos Rodriguez
@@ -85,48 +52,17 @@ export default function ProfileScreen() {
           {/* Quick Stats */}
           <HStack justifyContent="space-around">
             <VStack alignItems="center" space={1}>
-              <Text fontSize="2xl" fontWeight="bold" color="primary.500">
-                12
-              </Text>
-              <Text fontSize="sm" color="gray.600">
-                Reservas
-              </Text>
+              <Text fontSize="2xl" fontWeight="bold" color="primary.500">12</Text>
+              <Text fontSize="sm" color="gray.600">Reservas</Text>
             </VStack>
             <VStack alignItems="center" space={1}>
-              <Text fontSize="2xl" fontWeight="bold" color="primary.500">
-                8
-              </Text>
-              <Text fontSize="sm" color="gray.600">
-                Reseñas
-              </Text>
+              <Text fontSize="2xl" fontWeight="bold" color="primary.500">8</Text>
+              <Text fontSize="sm" color="gray.600">Reseñas</Text>
             </VStack>
             <VStack alignItems="center" space={1}>
-              <Text fontSize="2xl" fontWeight="bold" color="primary.500">
-                15
-              </Text>
-              <Text fontSize="sm" color="gray.600">
-                Favoritos
-              </Text>
+              <Text fontSize="2xl" fontWeight="bold" color="primary.500">15</Text>
+              <Text fontSize="sm" color="gray.600">Favoritos</Text>
             </VStack>
-          </HStack>
-
-          <Divider />
-
-          {/* Notifications Toggle */}
-          <HStack justifyContent="space-between" alignItems="center">
-            <VStack flex={1}>
-              <Text fontSize="md" fontWeight="medium">
-                Notificaciones 🔔
-              </Text>
-              <Text fontSize="sm" color="gray.600">
-                Recibir ofertas y actualizaciones
-              </Text>
-            </VStack>
-            <Switch
-              isChecked={notificationsEnabled}
-              onToggle={setNotificationsEnabled}
-              colorScheme="primary"
-            />
           </HStack>
 
           <Divider />
@@ -151,31 +87,11 @@ export default function ProfileScreen() {
                       {item.subtitle}
                     </Text>
                   </VStack>
-                  <Text fontSize="lg" color="gray.400">
-                    ▶️
-                  </Text>
+                  <Text fontSize="lg" color="gray.400">▶️</Text>
                 </HStack>
               </Pressable>
             ))}
           </VStack>
-
-          <Divider />
-
-          {/* Logout Button */}
-          <Pressable>
-            <HStack
-              alignItems="center"
-              space={3}
-              p={3}
-              rounded="lg"
-              _pressed={{ bg: 'red.50' }}
-            >
-              <Text fontSize="2xl">🚪</Text>
-              <Text fontSize="md" fontWeight="medium" color="red.500">
-                Cerrar Sesión
-              </Text>
-            </HStack>
-          </Pressable>
         </VStack>
       </ScrollView>
     </Box>

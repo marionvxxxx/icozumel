@@ -5,7 +5,6 @@ import {
   Text,
   VStack,
   HStack,
-  Image,
   Badge,
   Pressable,
   SimpleGrid,
@@ -26,7 +25,6 @@ const featuredBusinesses = [
     name: 'Restaurant El Moro',
     category: 'Restaurante',
     rating: 4.8,
-    image: 'https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?w=300&h=200&fit=crop',
     verified: true,
     price: '$$',
   },
@@ -35,7 +33,6 @@ const featuredBusinesses = [
     name: 'Dive Shop Paradise',
     category: 'Actividades',
     rating: 4.9,
-    image: 'https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?w=300&h=200&fit=crop',
     verified: true,
     price: '$$$',
   },
@@ -44,7 +41,6 @@ const featuredBusinesses = [
     name: 'Beach Club Sunset',
     category: 'Entretenimiento',
     rating: 4.7,
-    image: 'https://images.pexels.com/photos/189296/pexels-photo-189296.jpeg?w=300&h=200&fit=crop',
     verified: false,
     price: '$$',
   },
@@ -98,14 +94,8 @@ export default function ExploreScreen() {
           <VStack space={4}>
             {featuredBusinesses.map((business) => (
               <Pressable key={business.id}>
-                <Box bg="white" rounded="xl" shadow={3} overflow="hidden">
-                  <Image
-                    source={{ uri: business.image }}
-                    alt={business.name}
-                    height="40"
-                    width="100%"
-                  />
-                  <VStack space={3} p={4}>
+                <Box bg="white" rounded="xl" shadow={3} overflow="hidden" p={4}>
+                  <VStack space={3}>
                     <HStack justifyContent="space-between" alignItems="center">
                       <Text fontSize="lg" fontWeight="semibold" flex={1}>
                         {business.name}
