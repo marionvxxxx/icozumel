@@ -20,7 +20,7 @@ const ProfilePage: React.FC = () => {
   ];
   if (!user) {
     return (
-      <div className={`${mobile ? 'pb-20' : ''} bg-gray-50 min-h-screen flex items-center justify-center`}>
+      <div className={`${mobile ? 'pb-20' : ''} min-h-screen flex items-center justify-center`}>
         <div className="text-center">
           <h2 className="text-xl font-bold text-gray-900 mb-2">Please sign in</h2>
           <p className="text-gray-600">Sign in to view your profile</p>
@@ -30,7 +30,7 @@ const ProfilePage: React.FC = () => {
   }
 
   return (
-    <div className={`${mobile ? 'pb-20' : ''} bg-gray-50 min-h-screen`}>
+    <div className={`${mobile ? 'pb-20' : ''} min-h-screen`}>
       <ResponsiveLayout className={`${mobile ? 'px-4' : 'px-0'} py-4 space-y-4`}>
         {/* Profile Header */}
         <div className="bg-gradient-to-br from-primary-500 to-secondary-600 text-white rounded-xl p-6">

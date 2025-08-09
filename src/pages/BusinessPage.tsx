@@ -35,7 +35,7 @@ const BusinessPage: React.FC = () => {
   ];
 
   return (
-    <div className={`${mobile ? 'pb-20' : ''} bg-gray-50 min-h-screen`}>
+    <div className={`${mobile ? 'pb-20' : ''} min-h-screen`}>
       <ResponsiveLayout className={`${mobile ? 'px-4' : 'px-0'} py-4 space-y-4`}>
         {/* Header */}
         <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl p-6">

@@ -55,7 +55,7 @@ function App() {
 
   return (
     <AuthContext.Provider value={authState}>
-      <div className={`min-h-screen bg-gray-50 ${desktop ? 'pl-64' : ''}`}>
+      <div className={`min-h-screen ${desktop ? 'pl-64' : ''}`}>
         {/* Desktop Sidebar */}
         {desktop && (
           <Sidebar 

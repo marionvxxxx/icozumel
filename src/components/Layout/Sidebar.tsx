@@ -23,15 +23,15 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
   ]
 
   return (
-    <div className="fixed left-0 top-0 h-full w-64 bg-white border-r border-gray-200 z-40">
+    <div className="fixed left-0 top-0 h-full w-64 glass-dark border-r border-white/20 z-40">
       <div className="p-6">
         <div className="flex items-center space-x-2 mb-8">
           <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center">
             <span className="text-white font-bold">LV</span>
           </div>
           <div>
-            <h1 className="text-xl font-bold text-gray-900">LocalVibe</h1>
-            <p className="text-sm text-gray-500">Discover Your Community</p>
+            <h1 className="text-xl font-bold text-white font-display">LocalVibe</h1>
+            <p className="text-sm text-white/60">Discover Your Community</p>
           </div>
         </div>
 
@@ -46,8 +46,8 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
                 onClick={() => onTabChange(tab.id)}
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 ${
                   isActive
-                    ? 'bg-primary-50 text-primary-600 border-r-2 border-primary-600'
-                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                    ? 'bg-primary-500/20 text-primary-400 border-r-2 border-primary-400'
+                    : 'text-white/70 hover:bg-white/10 hover:text-white'
                 }`}
               >
                 <Icon size={20} />
@@ -67,19 +67,19 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
                   className="w-10 h-10 rounded-full object-cover"
                 />
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-gray-900 truncate">{user.name}</p>
-                  <p className="text-sm text-gray-500 truncate">{user.email}</p>
+                  <p className="font-medium text-white truncate">{user.name}</p>
+                  <p className="text-sm text-white/60 truncate">{user.email}</p>
                 </div>
               </div>
               
               <div className="space-y-1">
-                <button className="w-full flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors">
+                <button className="w-full flex items-center space-x-3 px-3 py-2 text-white/70 hover:bg-white/10 rounded-lg transition-colors">
                   <Settings size={16} />
                   <span className="text-sm">Settings</span>
                 </button>
                 <button
                   onClick={logout}
-                  className="w-full flex items-center space-x-3 px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                  className="w-full flex items-center space-x-3 px-3 py-2 text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
                 >
                   <LogOut size={16} />
                   <span className="text-sm">Sign Out</span>
