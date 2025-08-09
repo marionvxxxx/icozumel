@@ -114,10 +114,12 @@ function App() {
         </main>
 
         {/* Mobile Bottom Navigation */}
-        <BottomNavigation 
-          activeTab={activeTab} 
-          onTabChange={setActiveTab} 
-        />
+        {!desktop && (
+          <BottomNavigation 
+            activeTab={activeTab} 
+            onTabChange={setActiveTab} 
+          />
+        )}
 
         {/* Auth Modal */}
         <AuthModal
@@ -148,56 +150,6 @@ function App() {
             }}
           />
         )}
-      </div>
-    </AuthContext.Provider>
-  );
-}
-
-export default App;
-          title={getPageTitle()}
-          showLocation={activeTab === 'home' || activeTab === 'discover'}
-          showNotifications={!!authState.user}
-        />
-        
-        <main className="relative">
-          {renderCurrentPage()}
-        </main>
-
-        <BottomNavigation 
-          activeTab={activeTab} 
-          onTabChange={setActiveTab} 
-        />
-
-        <AuthModal
-          isOpen={showAuthModal}
-          onClose={() => setShowAuthModal(false)}
-        />
-
-        {/* Floating Action Button for Quick Actions */}
-        {authState.user && (
-          <FloatingActionButton
-            onAction={(action) => {
-              console.log('FAB action:', action);
-              // Handle different actions
-              switch (action) {
-                case 'review':
-                  // Open review modal
-                  break;
-                case 'photo':
-                  // Open camera/photo upload
-                  break;
-                case 'checkin':
-                  // Open check-in modal
-                  break;
-                case 'event':
-                  // Navigate to create event
-                  break;
-              }
-            }}
-          />
-        )}
-
-        {/* Welcome Banner for New Users */}
       </div>
     </AuthContext.Provider>
   );
