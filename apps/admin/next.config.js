@@ -13,11 +13,6 @@ const nextConfig = {
     domains: ['images.unsplash.com', 'images.pexels.com'],
   },
   
-  // Output configuration for better deployment
-  output: 'export',
-  trailingSlash: true,
-  distDir: 'out',
-  
   // Disable webpack cache to avoid issues
   webpack: (config, { dev, isServer }) => {
     // Disable webpack cache in WebContainer
