@@ -5,6 +5,7 @@
   "description": "Mobile marketplace for Cozumel businesses - iOS and Android apps with admin management",
   "scripts": {
     "dev:mobile": "cd apps/mobile && npx expo start",
+    "preview:mobile": "cd apps/mobile && npx expo start --web",
     "dev:admin": "cd apps/admin && npm run dev",
     "build:mobile:ios": "cd apps/mobile && npx expo build:ios",
     "build:mobile:android": "cd apps/mobile && npx expo build:android",

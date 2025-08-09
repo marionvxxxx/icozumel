@@ -4,6 +4,7 @@ import { NativeBaseProvider } from 'native-base';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
+import { Platform } from 'react-native';
 
 // Screens
 import MapScreen from './src/screens/MapScreen';
@@ -13,12 +14,14 @@ import ProfileScreen from './src/screens/ProfileScreen';
 
 // Theme
 import { theme } from './src/theme';
+import { WebPreviewBanner } from './src/components/WebPreviewBanner';
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
     <NativeBaseProvider theme={theme}>
+      <WebPreviewBanner />
       <NavigationContainer>
         <StatusBar style="auto" />
         <Tab.Navigator
