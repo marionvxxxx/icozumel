@@ -1,131 +1,176 @@
 import React from 'react';
+import React, { memo, useMemo, useCallback } from 'react';
+import { FlatList, ListRenderItem } from 'react-native';
 import {
   Box,
-  ScrollView,
   Text,
   VStack,
   HStack,
-  Badge,
   Pressable,
-  SimpleGrid,
-} from 'native-base';
+} from '@gluestack-ui/themed';
+import { useBusinessStore } from '../store/businessStore';
+import { useLocalFirst } from '../hooks/useLocalFirst';
+import OptimizedBusinessCard from '../components/OptimizedBusinessCard';
 
-const categories = [
-  { id: '1', name: 'Restaurantes', icon: '🍽️', color: 'primary.500' },
-  { id: '2', name: 'Actividades', icon: '🏊‍♂️', color: 'secondary.500' },
-  { id: '3', name: 'Compras', icon: '🛍️', color: 'purple.500' },
-  { id: '4', name: 'Hoteles', icon: '🏨', color: 'blue.500' },
-  { id: '5', name: 'Transporte', icon: '🚗', color: 'green.500' },
-  { id: '6', name: 'Vida Nocturna', icon: '🌙', color: 'pink.500' },
+interface Category {
+  id: string;
+  name: string;
+  icon: string;
+  color: string;
+}
+
+interface Business {
+  id: string;
+  name: string;
+  category: string;
+  rating: number;
+  distance?: string;
+  verified: boolean;
+  images: string[];
+}
+
+const categories: Category[] = [
+  { id: '1', name: 'Restaurantes', icon: '🍽️', color: '$primary500' },
+  { id: '2', name: 'Actividades', icon: '🏊‍♂️', color: '$secondary500' },
+  { id: '3', name: 'Compras', icon: '🛍️', color: '$purple500' },
+  { id: '4', name: 'Hoteles', icon: '🏨', color: '$blue500' },
+  { id: '5', name: 'Transporte', icon: '🚗', color: '$green500' },
+  { id: '6', name: 'Vida Nocturna', icon: '🌙', color: '$pink500' },
 ];
 
-const featuredBusinesses = [
-  {
-    id: '1',
-    name: 'Restaurant El Moro',
-    category: 'Restaurante',
-    rating: 4.8,
-    verified: true,
-    price: '$$',
-  },
-  {
-    id: '2',
-    name: 'Dive Shop Paradise',
-    category: 'Actividades',
-    rating: 4.9,
-    verified: true,
-    price: '$$$',
-  },
-  {
-    id: '3',
-    name: 'Beach Club Sunset',
-    category: 'Entretenimiento',
-    rating: 4.7,
-    verified: false,
-    price: '$$',
-  },
-];
+// Memoized category item component
+const CategoryItem = memo<{ category: Category; onPress: (category: Category) => void }>(
+  ({ category, onPress }) => {
+    const handlePress = useCallback(() => onPress(category), [category, onPress]);
+    
+    return (
+      <Pressable onPress={handlePress} flex={1}>
+        <VStack
+          alignItems="center"
+          space="$3"
+          bg="$gray50"
+          borderRadius="$xl"
+          p="$4"
+          mx="$1"
+          mb="$2"
+        >
+          <Text fontSize="$3xl">{category.icon}</Text>
+          <Text fontSize="$sm" fontWeight="$medium" textAlign="center">
+            {category.name}
+          </Text>
+        </VStack>
+      </Pressable>
+    );
+  }
+);
 
-export default function ExploreScreen() {
+CategoryItem.displayName = 'CategoryItem';
+
+const ExploreScreen = memo(() => {
+  const {
+    businesses,
+    favorites,
+    selectedCategory,
+    setSelectedCategory,
+    toggleFavorite,
+  } = useBusinessStore();
+
+  // Local-first data fetching
+  const { data: featuredBusinesses, loading } = useLocalFirst<Business[]>({
+    key: 'featured_businesses',
+    fetchFn: async () => {
+      // Replace with actual Supabase call
+      const response = await fetch('/api/businesses/featured');
+      return response.json();
+    },
+    syncInterval: 60000, // 1 minute
+    maxAge: 300000, // 5 minutes
+  });
+
+  const handleCategoryPress = useCallback((category: Category) => {
+    setSelectedCategory(selectedCategory === category.id ? null : category.id);
+  }, [selectedCategory, setSelectedCategory]);
+
+  const handleBusinessPress = useCallback((business: Business) => {
+    // Navigate to business details
+    console.log('Navigate to business:', business.id);
+  }, []);
+
+  const filteredBusinesses = useMemo(() => {
+    if (!featuredBusinesses) return [];
+    if (!selectedCategory) return featuredBusinesses;
+    return featuredBusinesses.filter(business => 
+      business.category.toLowerCase().includes(selectedCategory.toLowerCase())
+    );
+  }, [featuredBusinesses, selectedCategory]);
+
+  const renderBusinessItem: ListRenderItem<Business> = useCallback(({ item }) => (
+    <OptimizedBusinessCard
+      business={item}
+      onPress={handleBusinessPress}
+      isFavorite={favorites.includes(item.id)}
+      onToggleFavorite={toggleFavorite}
+    />
+  ), [handleBusinessPress, favorites, toggleFavorite]);
+
+  const keyExtractor = useCallback((item: Business) => item.id, []);
+
   return (
-    <Box flex={1} bg="white" safeArea>
-      <ScrollView showsVerticalScrollIndicator={false}>
+    <Box flex={1} bg="$white">
+      <VStack flex={1} space="$4" p="$4">
         {/* Header */}
-        <VStack space={4} p={4}>
-          <Text fontSize="3xl" fontWeight="bold" color="gray.800">
+        <VStack space="$2">
+          <Text size="3xl" fontWeight="$bold" color="$gray800">
             Descubre Cozumel 🏝️
           </Text>
-          <Text fontSize="md" color="gray.600">
+          <Text size="md" color="$gray600">
             Encuentra los mejores negocios locales
           </Text>
         </VStack>
 
         {/* Categories */}
-        <VStack space={4} px={4}>
-          <Text fontSize="xl" fontWeight="semibold" color="gray.800">
+        <VStack space="$3">
+          <Text size="xl" fontWeight="$semibold" color="$gray800">
             Categorías
           </Text>
-          <SimpleGrid columns={2} spacing={3}>
+          <HStack flexWrap="wrap" justifyContent="space-between">
             {categories.map((category) => (
-              <Pressable key={category.id}>
-                <VStack
-                  alignItems="center"
-                  space={3}
-                  bg="gray.50"
-                  rounded="xl"
-                  p={4}
-                  _pressed={{ bg: 'gray.100' }}
-                >
-                  <Text fontSize="3xl">{category.icon}</Text>
-                  <Text fontSize="sm" fontWeight="medium" textAlign="center">
-                    {category.name}
-                  </Text>
-                </VStack>
-              </Pressable>
+              <Box key={category.id} width="48%">
+                <CategoryItem
+                  category={category}
+                  onPress={handleCategoryPress}
+                />
+              </Box>
             ))}
-          </SimpleGrid>
+          </HStack>
         </VStack>
 
         {/* Featured Businesses */}
-        <VStack space={4} p={4}>
-          <Text fontSize="xl" fontWeight="semibold" color="gray.800">
+        <VStack flex={1} space="$3">
+          <Text size="xl" fontWeight="$semibold" color="$gray800">
             Negocios Destacados ⭐
           </Text>
-          <VStack space={4}>
-            {featuredBusinesses.map((business) => (
-              <Pressable key={business.id}>
-                <Box bg="white" rounded="xl" shadow={3} overflow="hidden" p={4}>
-                  <VStack space={3}>
-                    <HStack justifyContent="space-between" alignItems="center">
-                      <Text fontSize="lg" fontWeight="semibold" flex={1}>
-                        {business.name}
-                      </Text>
-                      {business.verified && (
-                        <Badge colorScheme="green" variant="solid" rounded="full">
-                          ✓ Verificado
-                        </Badge>
-                      )}
-                    </HStack>
-                    <HStack alignItems="center" space={3}>
-                      <Badge variant="outline" rounded="full">
-                        {business.category}
-                      </Badge>
-                      <HStack alignItems="center" space={1}>
-                        <Text fontSize="sm" color="gray.600">
-                          ⭐ {business.rating}
-                        </Text>
-                      </HStack>
-                      <Text fontSize="sm" color="gray.600">
-                        💰 {business.price}
-                      </Text>
-                    </HStack>
-                  </VStack>
-                </Box>
-              </Pressable>
-            ))}
-          </VStack>
+          
+          {loading ? (
+            <Text>Cargando...</Text>
+          ) : (
+            <FlatList
+              data={filteredBusinesses}
+              renderItem={renderBusinessItem}
+              keyExtractor={keyExtractor}
+              showsVerticalScrollIndicator={false}
+              removeClippedSubviews={true}
+              maxToRenderPerBatch={10}
+              windowSize={10}
+              initialNumToRender={5}
+            />
+          )}
         </VStack>
-      </ScrollView>
+      </VStack>
     </Box>
   );
-}
+});
+
+ExploreScreen.displayName = 'ExploreScreen';
+
+export default ExploreScreen;

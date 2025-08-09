@@ -12,8 +12,9 @@ const nextConfig = {
   // Ensure proper asset prefix for static export
   assetPrefix: '',
   
-  // Enable Turbopack for development
+  // Enable Turbopack for development and production optimizations
   experimental: {
+    // Enable Turbopack for faster builds
     turbo: {
       rules: {
         '*.svg': {
@@ -22,6 +23,24 @@ const nextConfig = {
         },
       },
     },
+    // Enable React 19 features when available
+    reactCompiler: true,
+    // Optimize bundle splitting
+    optimizePackageImports: ['@cozumel/ui', 'lucide-react'],
+  },
+  
+  // Compiler optimizations
+  compiler: {
+    // Remove console.log in production
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+  
+  // Performance optimizations
+  swcMinify: true,
+  
+  // Enable ISR for specific pages
+  async generateStaticParams() {
+    return [];
   },
 }
 

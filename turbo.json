@@ -1,42 +1,71 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local"],
-  "globalEnv": ["NODE_ENV"],
+  "globalDependencies": ["**/.env.*local", "**/.env"],
+  "globalEnv": ["NODE_ENV", "VERCEL_ENV", "CI"],
+  "ui": "tui",
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**"],
-      "env": ["NODE_ENV"]
+      "outputs": [".next/**", "!.next/cache/**", "dist/**", "out/**"],
+      "env": ["NODE_ENV", "NEXT_PUBLIC_*"],
+      "persistent": false
     },
     "dev": {
       "cache": false,
       "persistent": true,
-      "env": ["NODE_ENV"]
+      "env": ["NODE_ENV", "NEXT_PUBLIC_*", "EXPO_PUBLIC_*"]
     },
     "lint": {
       "dependsOn": ["^build"],
-      "outputs": []
+      "outputs": ["eslint-report.json"],
+      "inputs": ["src/**/*.{ts,tsx,js,jsx}", "**/*.{ts,tsx,js,jsx}", "!node_modules/**"]
     },
     "typecheck": {
       "dependsOn": ["^build"],
-      "outputs": []
+      "outputs": ["tsconfig.tsbuildinfo"],
+      "inputs": ["src/**/*.{ts,tsx}", "**/*.{ts,tsx}", "tsconfig.json", "!node_modules/**"]
     },
     "test": {
       "dependsOn": ["^build"],
-      "outputs": ["coverage/**"]
+      "outputs": ["coverage/**", "test-results/**"],
+      "inputs": ["src/**/*.{ts,tsx,js,jsx}", "**/*.test.{ts,tsx,js,jsx}", "jest.config.*", "!node_modules/**"]
     },
     "clean": {
-      "cache": false
+      "cache": false,
+      "outputs": []
     },
     "db:generate": {
       "cache": false,
-      "outputs": ["packages/database/src/**"]
+      "outputs": ["packages/database/src/**", "node_modules/.prisma/**"],
+      "inputs": ["packages/database/prisma/schema.prisma"]
     },
     "db:push": {
-      "cache": false
+      "cache": false,
+      "dependsOn": ["db:generate"]
     },
     "db:seed": {
-      "cache": false
+      "cache": false,
+      "dependsOn": ["db:push"]
+    },
+    "format": {
+      "outputs": [],
+      "inputs": ["**/*.{ts,tsx,js,jsx,json,md}", "!node_modules/**"]
+    },
+    "mobile:web": {
+      "cache": false,
+      "persistent": true,
+      "env": ["NODE_ENV", "EXPO_PUBLIC_*"]
+    },
+    "mobile:ios": {
+      "cache": false,
+      "outputs": ["apps/mobile/ios/build/**"]
+    },
+    "mobile:android": {
+      "cache": false,
+      "outputs": ["apps/mobile/android/app/build/**"]
     }
+  },
+  "remoteCache": {
+    "signature": true
   }
 }

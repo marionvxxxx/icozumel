@@ -1,3 +1,26 @@
+import { Suspense } from 'react';
+import { Card, CardHeader, CardTitle, CardContent } from '@cozumel/ui';
+import { Skeleton } from '@cozumel/ui';
+import { LazyAnalyticsChart } from '../components/dashboard/LazyAnalyticsChart';
+
+function StatsSkeleton() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {[...Array(4)].map((_, i) => (
+        <Card key={i}>
+          <CardContent className="p-6">
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-20" />
+              <Skeleton className="h-8 w-16" />
+              <Skeleton className="h-3 w-24" />
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
+}
+
 export default function AdminDashboard() {
   return (
     <div className="space-y-6">
@@ -8,53 +31,66 @@ export default function AdminDashboard() {
       </div>
 
       {/* Mobile App Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white rounded-lg border shadow-sm p-6">
-          <div className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <h3 className="text-sm font-medium">iOS Downloads</h3>
-            <span className="text-2xl">📱</span>
-          </div>
-          <div className="text-2xl font-bold">12,543</div>
-          <p className="text-xs text-gray-600">+15% from last month</p>
-        </div>
+      <Suspense fallback={<StatsSkeleton />}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <h3 className="text-sm font-medium">iOS Downloads</h3>
+                <span className="text-2xl">📱</span>
+              </div>
+              <div className="text-2xl font-bold">12,543</div>
+              <p className="text-xs text-gray-600">+15% from last month</p>
+            </CardContent>
+          </Card>
 
-        <div className="bg-white rounded-lg border shadow-sm p-6">
-          <div className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <h3 className="text-sm font-medium">Android Downloads</h3>
-            <span className="text-2xl">🤖</span>
-          </div>
-          <div className="text-2xl font-bold">18,721</div>
-          <p className="text-xs text-gray-600">+22% from last month</p>
-        </div>
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <h3 className="text-sm font-medium">Android Downloads</h3>
+                <span className="text-2xl">🤖</span>
+              </div>
+              <div className="text-2xl font-bold">18,721</div>
+              <p className="text-xs text-gray-600">+22% from last month</p>
+            </CardContent>
+          </Card>
 
-        <div className="bg-white rounded-lg border shadow-sm p-6">
-          <div className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <h3 className="text-sm font-medium">Active Users</h3>
-            <span className="text-2xl">👥</span>
-          </div>
-          <div className="text-2xl font-bold">8,456</div>
-          <p className="text-xs text-gray-600">+8% from last week</p>
-        </div>
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <h3 className="text-sm font-medium">Active Users</h3>
+                <span className="text-2xl">👥</span>
+              </div>
+              <div className="text-2xl font-bold">8,456</div>
+              <p className="text-xs text-gray-600">+8% from last week</p>
+            </CardContent>
+          </Card>
 
-        <div className="bg-white rounded-lg border shadow-sm p-6">
-          <div className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <h3 className="text-sm font-medium">Pending Verifications</h3>
-            <span className="text-2xl">⚠️</span>
-          </div>
-          <div className="text-2xl font-bold">23</div>
-          <p className="text-xs text-gray-600">Requires attention</p>
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <h3 className="text-sm font-medium">Pending Verifications</h3>
+                <span className="text-2xl">⚠️</span>
+              </div>
+              <div className="text-2xl font-bold">23</div>
+              <p className="text-xs text-gray-600">Requires attention</p>
+            </CardContent>
+          </Card>
         </div>
-      </div>
+      </Suspense>
+
+      {/* Analytics Chart */}
+      <LazyAnalyticsChart />
 
       {/* Mobile App Statistics */}
-      <div className="bg-white rounded-lg border shadow-sm">
-        <div className="p-6 border-b">
-          <h3 className="text-lg font-semibold flex items-center space-x-2">
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
             <span>📊</span>
             <span>Mobile App Statistics</span>
-          </h3>
-        </div>
-        <div className="p-6">
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
           <div className="grid grid-cols-2 gap-6">
             {/* iOS Stats */}
             <div className="space-y-4">
@@ -129,19 +165,19 @@ export default function AdminDashboard() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
       {/* Business Verification Queue */}
-      <div className="bg-white rounded-lg border shadow-sm">
-        <div className="p-6 border-b">
-          <h3 className="text-lg font-semibold flex items-center space-x-2">
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
             <span>✅</span>
             <span>Business Verification Queue</span>
             <span className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full">3</span>
-          </h3>
-        </div>
-        <div className="p-6">
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
           <div className="space-y-4">
             {[
               {
@@ -214,8 +250,8 @@ export default function AdminDashboard() {
               </div>
             ))}
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
