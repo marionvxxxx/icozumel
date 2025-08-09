@@ -1,5 +1,5 @@
 [build]
-  command = "cd apps/admin && npm install && npm run build"
+  command = "pnpm install && pnpm --filter @cozumel/admin build"
   publish = "apps/admin/out"
   base = "."
 
@@ -8,7 +8,7 @@
 
 # Specify the admin project for dev previews
 [dev]
-  command = "cd apps/admin && npm run dev"
+  command = "cd apps/admin && pnpm dev"
   port = 3001
   publish = "apps/admin/.next"
   framework = "#custom"
