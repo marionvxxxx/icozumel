@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "cd apps/admin && npm run build",
-    "dev": "pnpm --filter @cozumel/admin dev",
+    "dev": "cd apps/admin && npm run dev",
     "lint": "cd apps/admin && npm run lint",
     "typecheck": "cd apps/admin && npm run typecheck",
     "clean": "rm -rf node_modules apps/web/node_modules packages/*/node_modules",
