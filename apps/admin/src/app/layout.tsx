@@ -8,8 +8,9 @@ import { AdminHeader } from '@/components/layout/admin-header';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Cozumel Admin - Business Management',
-  description: 'Admin dashboard for managing Cozumel marketplace businesses and verifications',
+  title: 'Cozumel Mobile Admin - App & Business Management',
+  description: 'Admin dashboard for managing Cozumel mobile apps (iOS/Android) and business verifications',
+  keywords: 'mobile app management, iOS, Android, business verification, admin dashboard',
 };
 
 export default function RootLayout({

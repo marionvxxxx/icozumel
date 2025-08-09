@@ -1,10 +1,12 @@
-# Cozumel Business Marketplace - Mobile Apps & Admin
+# Cozumel Business Marketplace - Mobile Apps (iOS/Android)
 
-A mobile-first business marketplace for Cozumel, MX, with React Native apps for Android/iOS and an admin dashboard for business verification management.
+A mobile-first business marketplace for Cozumel, Mexico, with native iOS and Android apps and an admin dashboard for business verification and app management.
 
-## 🚀 Features
+## 🚀 Project Overview
 
 ### Mobile Apps (React Native)
+- **iOS App**: Native iOS application for iPhone/iPad
+- **Android App**: Native Android application
 - **Business Discovery**: Map-based search and discovery
 - **User Authentication**: Email/phone/OAuth with Supabase
 - **Business Listings**: Browse and search local businesses
@@ -13,11 +15,12 @@ A mobile-first business marketplace for Cozumel, MX, with React Native apps for 
 - **Offline Support**: Cached data for offline browsing
 
 ### Admin Dashboard (Next.js)
-- **Business Verification**: Automated 7-9 minute verification process with tier-based access
-- **Verification Queue**: Review and approve business applications
-- **Content Moderation**: Automated safety checks and manual review
-- **Analytics Dashboard**: Business metrics and user insights
-- **Mobile App Management**: Feature flags and app configuration
+- **Mobile App Management**: Configure iOS/Android app settings
+- **Business Verification**: Automated verification process with tier-based access
+- **Content Moderation**: Review and approve business content
+- **Analytics Dashboard**: Mobile app usage and business metrics
+- **Push Notifications**: Send notifications to mobile users
+- **Feature Flags**: Enable/disable features remotely
 
 ## 🛠️ Tech Stack
 
@@ -25,108 +28,126 @@ A mobile-first business marketplace for Cozumel, MX, with React Native apps for 
 - **Framework**: React Native with Expo
 - **Navigation**: React Navigation v6
 - **State Management**: Zustand
-- **Maps**: React Native Maps
+- **Maps**: React Native Maps (Google Maps/Apple Maps)
 - **UI**: NativeBase components
+- **Authentication**: Supabase Auth
+- **Payments**: Stripe React Native SDK
+- **Push Notifications**: Expo Notifications
+- **Analytics**: PostHog React Native
 
 ### Admin Dashboard
-- **Framework**: Next.js 14 (App Router, React Server Components)
-- **UI**: Tailwind CSS, shadcn/ui, Lucide React icons
+- **Framework**: Next.js 14 (App Router)
+- **UI**: Tailwind CSS, shadcn/ui
+- **Database**: PostgreSQL (Supabase) + Prisma
+- **Real-time**: Supabase Realtime
 
 ### Shared Infrastructure
 - **Monorepo**: pnpm workspaces
 - **Database**: PostgreSQL (Supabase) + Prisma
-- **Auth**: Supabase Auth (email/phone/OAuth)
-- **Payments**: Stripe Connect + Stripe Identity
+- **Auth**: Supabase Auth
 - **Storage**: Supabase Storage
 - **Analytics**: PostHog
-- **Safety**: Google Cloud Vision API
+- **Content Moderation**: Google Cloud Vision API
 
 ## 📦 Installation
 
 ```bash
 # Install dependencies
-npm install
+pnpm install
 
 # Set up environment variables
 cp apps/admin/.env.example apps/admin/.env.local
+cp apps/mobile/.env.example apps/mobile/.env.local
 
 # Generate database client
-npm run db:generate
+pnpm db:generate
 
 # Push database schema
-npm run db:push
+pnpm db:push
 
 # Seed database with Cozumel data
-npm run db:seed
-
-# Start admin dashboard
-npm run dev
+pnpm db:seed
 ```
 
 ## 🏗️ Project Structure
 
 ```
 apps/
-├── admin/                  # Next.js admin dashboard
-├── mobile/                 # React Native mobile apps
+├── mobile/                 # React Native mobile apps (iOS/Android)
+│   ├── src/
+│   │   ├── components/     # Shared UI components
+│   │   ├── screens/        # App screens
+│   │   ├── navigation/     # Navigation setup
+│   │   ├── services/       # API services
+│   │   ├── store/          # State management
+│   │   └── types/          # TypeScript types
+│   ├── ios/                # iOS-specific code
+│   ├── android/            # Android-specific code
+│   └── app.json            # Expo configuration
+└── admin/                  # Admin dashboard for mobile app management
+    ├── src/
+    │   ├── app/            # Next.js app router
+    │   ├── components/     # Admin UI components
+    │   └── lib/            # Utilities
+    └── package.json
+
 packages/
-├── ui/                     # Shared UI components (shadcn/ui)
+├── ui/                     # Shared UI components
 ├── database/               # Prisma schema and client
 └── i18n/                   # Internationalization
 ```
 
-## 🎯 Core Features
+## 📱 Mobile App Features
 
-### Mobile App Features
-
-#### For Tourists & Locals
-- **Map Discovery**: Find businesses on interactive map
-- **Search & Filter**: Advanced search with categories
-- **Bookings**: Make reservations and appointments
-- **Reviews**: Rate and review businesses
+### For Tourists & Locals
+- **Map Discovery**: Interactive map with business markers
+- **Advanced Search**: Filter by category, location, rating, price
+- **Business Profiles**: Photos, reviews, hours, contact info
+- **Bookings**: Make reservations for restaurants, tours, services
+- **Reviews**: Rate and review businesses with photos
 - **Favorites**: Save preferred businesses
-- **Offline Mode**: Browse cached content offline
+- **Offline Mode**: Browse cached content without internet
+- **Push Notifications**: Booking confirmations, special offers
 
-#### For Business Owners
-- **Quick Registration**: Fast business setup flow
-- **Verification Process**: Document upload and verification
-- **Listing Management**: Create and manage business listings
-- **Analytics**: View business performance metrics
-- **Ad Campaigns**: Create and manage advertising
+### For Business Owners
+- **Business Registration**: Quick setup with photo verification
+- **Listing Management**: Add/edit business information and photos
+- **Booking Management**: Accept/decline reservations
+- **Analytics**: View customer insights and performance metrics
+- **Promotions**: Create special offers and discounts
+- **Customer Communication**: Chat with customers
 
-### Admin Dashboard Features
+## 🎯 Admin Dashboard Features
 
-### Business Verification Tiers
+### Mobile App Management
+- **App Configuration**: Update app settings without deployment
+- **Feature Flags**: Enable/disable features for iOS/Android
+- **Version Control**: Manage app versions and force updates
+- **Push Notifications**: Send targeted notifications to users
+- **A/B Testing**: Test different app features and UI
 
-- **Tier 0 (Unverified)**: Browse only
-- **Tier 1 (Basic)**: 10 listings, 1 coupon, no payments/ads
-- **Tier 2 (Commercial)**: Unlimited listings, bookings, ads, analytics
-
-### Verification Management
-
-- **Queue Management**: Review pending verifications
+### Business Verification
+- **Verification Queue**: Review business applications
+- **Document Verification**: OCR and manual document review
 - **Risk Assessment**: Automated risk scoring
-- **Document Review**: OCR and manual document verification
-- **Compliance Monitoring**: Ongoing business compliance checks
+- **Tier Management**: Assign verification levels
+- **Compliance Monitoring**: Ongoing business compliance
 
 ### Content Moderation
+- **Automated Flagging**: AI-powered content moderation
+- **Manual Review**: Admin review interface
+- **User Reports**: Handle reported content
+- **Business Monitoring**: Track business compliance
 
-- **Automated Checks**: Google Cloud Vision for content moderation
-- **Manual Review**: Admin review for flagged content
-- **Reputation System**: Business reputation scoring
-- **Dispute Resolution**: Handle user complaints and disputes
+### Analytics & Insights
+- **Mobile App Usage**: User engagement and retention
+- **Business Performance**: Registration and verification rates
+- **Revenue Tracking**: Payment and booking analytics
+- **Geographic Insights**: Usage by location in Cozumel
 
-## 🌐 Multi-language Support
+## 🚀 Development
 
-The app supports both Spanish (primary) and English with:
-- Runtime language detection
-- Auto-translation for user content
-- Bilingual search with synonyms
-- Localized currency and date formats
-
-## 📱 Mobile Development
-
-### Getting Started with Mobile
+### Mobile App Development
 
 ```bash
 # Navigate to mobile app
@@ -143,88 +164,126 @@ npx expo run:ios
 
 # Run on Android emulator
 npx expo run:android
+
+# Build for production
+npx expo build:ios
+npx expo build:android
 ```
 
-### Mobile App Architecture
+### Admin Dashboard Development
 
-- **Authentication**: Supabase Auth with biometric support
-- **Navigation**: Tab navigation with stack navigators
-- **State Management**: Zustand for global state
-- **Offline Support**: React Query with persistence
-- **Push Notifications**: Expo Notifications
-- **Maps**: React Native Maps with custom markers
+```bash
+# Start admin dashboard
+pnpm dev:admin
+
+# Build for production
+pnpm build:admin
+```
+
+## 📱 Mobile App Architecture
+
+### Authentication Flow
+1. **Onboarding**: Language selection, location permissions
+2. **Registration**: Email/phone with SMS verification
+3. **Profile Setup**: User type (tourist/local/business owner)
+4. **Biometric Setup**: Face ID/Touch ID for quick login
+
+### Navigation Structure
+- **Tab Navigation**: Map, Explore, Bookings, Profile
+- **Stack Navigation**: Business details, booking flow, settings
+- **Modal Navigation**: Filters, search, notifications
+
+### State Management
+- **Global State**: User auth, app settings, cached data
+- **Local State**: Screen-specific data, form inputs
+- **Persistent State**: Favorites, search history, offline data
+
+### Offline Support
+- **Cached Businesses**: Store business data locally
+- **Offline Maps**: Download map tiles for Cozumel
+- **Queue Actions**: Store actions for when online
+- **Sync Strategy**: Background sync when connection restored
+
+## 🌐 Multi-language Support
+
+### Spanish (Primary)
+- Native Spanish content and UI
+- Local Mexican terminology
+- Peso currency formatting
+- Mexican date/time formats
+
+### English (Secondary)
+- Full English translation
+- US/International terminology
+- USD currency option
+- International date formats
+
+### Implementation
+- **Runtime Detection**: Auto-detect device language
+- **Content Translation**: Automatic translation for user content
+- **Search Optimization**: Bilingual search with synonyms
+- **Localized Assets**: Language-specific images and content
+
+## 🔐 Security & Privacy
+
+### Data Protection
+- **End-to-end Encryption**: Sensitive user data
+- **Biometric Authentication**: Secure app access
+- **Payment Security**: PCI DSS compliant with Stripe
+- **Location Privacy**: Opt-in location sharing
+
+### Business Verification
+- **Document Verification**: OCR + manual review
+- **Identity Verification**: Liveness detection
+- **Risk Assessment**: ML-powered fraud detection
+- **Ongoing Monitoring**: Continuous compliance checks
+
+## 📊 Analytics & Monitoring
+
+### Mobile App Analytics
+- **User Engagement**: Screen views, session duration
+- **Feature Usage**: Most used features and screens
+- **Performance**: App crashes, load times
+- **Conversion**: Registration to booking funnel
+
+### Business Analytics
+- **Registration Funnel**: Business signup completion
+- **Verification Success**: Approval rates by tier
+- **Content Quality**: Review and photo metrics
+- **Revenue Tracking**: Booking and payment analytics
 
 ## 🚀 Deployment
 
-### Admin Dashboard (Vercel)
+### iOS App Store
+1. **Development**: Test on iOS simulator and devices
+2. **TestFlight**: Beta testing with select users
+3. **App Store Review**: Submit for Apple review
+4. **Release**: Publish to App Store
 
-```bash
-# Build for production
-npm run build
+### Google Play Store
+1. **Development**: Test on Android emulator and devices
+2. **Internal Testing**: Alpha testing with team
+3. **Closed Testing**: Beta testing with select users
+4. **Production**: Publish to Google Play Store
 
-# Deploy to Vercel
-vercel --prod
-```
-
-### Mobile Apps
-
-#### iOS App Store
-1. Configure app signing in Xcode
-2. Build release version with `expo build:ios`
-3. Upload to App Store Connect
-4. Submit for review
-
-#### Google Play Store
-1. Generate signed APK with `expo build:android`
-2. Upload to Google Play Console
-3. Configure store listing
-4. Submit for review
-
-## 📊 Analytics
-
-Track key user interactions with PostHog:
-- Business registrations
-- Verification completions
-- Ad campaign launches
-- Booking conversions
-- Search queries
-- Mobile app usage patterns
-- Admin dashboard actions
-
-## 🔧 Admin Features
-
-### Dashboard Overview
-- **Business Statistics**: Total businesses, verifications, active users
-- **Verification Queue**: Pending business applications
-- **Recent Activity**: Real-time activity feed
-- **Analytics Charts**: Business growth and user engagement
-
-### Verification Management
-- **Document Review**: View uploaded documents and photos
-- **Risk Assessment**: Automated risk scoring with manual override
-- **Approval Workflow**: Approve, reject, or request additional information
-- **Tier Management**: Assign verification tiers based on compliance
-
-### Content Moderation
-- **Automated Flagging**: Google Cloud Vision API integration
-- **Manual Review**: Admin interface for content review
-- **User Reports**: Handle user-reported content
-- **Business Monitoring**: Ongoing compliance monitoring
-
-### Mobile App Management
-- **Feature Flags**: Enable/disable features remotely
-- **App Configuration**: Update app settings without deployment
-- **Push Notifications**: Send targeted notifications to users
-- **Version Control**: Manage app versions and force updates
+### Admin Dashboard
+- **Vercel Deployment**: Automatic deployment from main branch
+- **Environment Variables**: Secure configuration management
+- **Database Migrations**: Automated schema updates
+- **Monitoring**: Error tracking and performance monitoring
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests
-5. Submit a pull request
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## 📄 License
 
 MIT License - see LICENSE file for details.
+
+---
+
+**Built for Cozumel, Mexico** 🇲🇽 - Connecting tourists and locals with authentic island businesses.

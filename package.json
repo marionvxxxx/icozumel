@@ -1,28 +1,55 @@
 {
-  "name": "cozumel-marketplace",
+  "name": "cozumel-mobile-marketplace",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "version": "1.0.0",
+  "description": "Mobile marketplace for Cozumel businesses - iOS and Android apps with admin management",
   "scripts": {
-    "build": "cd apps/admin && npm run build",
-    "dev": "cd apps/admin && npm run dev",
-    "lint": "cd apps/admin && npm run lint",
-    "typecheck": "cd apps/admin && npm run typecheck",
-    "clean": "rm -rf node_modules apps/web/node_modules packages/*/node_modules",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "dev:mobile": "cd apps/mobile && npx expo start",
+    "dev:admin": "cd apps/admin && npm run dev",
+    "build:mobile:ios": "cd apps/mobile && npx expo build:ios",
+    "build:mobile:android": "cd apps/mobile && npx expo build:android",
+    "build:admin": "cd apps/admin && npm run build",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf node_modules apps/*/node_modules packages/*/node_modules",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
     "db:generate": "cd packages/database && npm run db:generate",
     "db:push": "cd packages/database && npm run db:push",
-    "db:seed": "cd packages/database && npm run db:seed"
+    "db:seed": "cd packages/database && npm run db:seed",
+    "mobile:ios": "cd apps/mobile && npx expo run:ios",
+    "mobile:android": "cd apps/mobile && npx expo run:android",
+    "mobile:prebuild": "cd apps/mobile && npx expo prebuild",
+    "admin:start": "cd apps/admin && npm start"
   },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "devDependencies": {
-    "@turbo/gen": "^1.11.2",
+    "@types/node": "^20.10.5",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "eslint-config-expo": "^7.0.0",
     "prettier": "^3.1.1",
-    "turbo": "^2.5.5",
     "typescript": "^5.3.3"
   },
-  "packageManager": "pnpm@8.12.1",
+  "keywords": [
+    "react-native",
+    "expo",
+    "ios",
+    "android",
+    "mobile",
+    "marketplace",
+    "cozumel",
+    "mexico",
+    "business",
+    "tourism"
+  ],
+  "author": "Cozumel Marketplace Team",
+  "license": "MIT",
   "engines": {
     "node": ">=18.17.0",
-    "pnpm": ">=8.0.0"
+    "npm": ">=8.0.0"
   }
 }

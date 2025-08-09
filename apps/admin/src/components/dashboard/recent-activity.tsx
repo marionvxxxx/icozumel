@@ -1,38 +1,46 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@cozumel/ui';
-import { Activity, CheckCircle, XCircle, UserPlus, Building2 } from 'lucide-react';
+import { Activity, CheckCircle, XCircle, UserPlus, Smartphone, Download } from 'lucide-react';
 
 const activities = [
   {
     id: '1',
+    type: 'app_download',
+    message: 'iOS app downloaded 50 times today',
+    timestamp: '2 minutes ago',
+    icon: Download,
+    color: 'text-mobile-600',
+  },
+  {
+    id: '2',
     type: 'verification_approved',
     message: 'Restaurant El Moro verified successfully',
-    timestamp: '2 minutes ago',
+    timestamp: '15 minutes ago',
     icon: CheckCircle,
     color: 'text-green-600',
   },
   {
-    id: '2',
+    id: '3',
     type: 'business_registered',
-    message: 'New business: Dive Shop Paradise',
-    timestamp: '15 minutes ago',
-    icon: Building2,
-    color: 'text-blue-600',
+    message: 'New business registered via Android app',
+    timestamp: '1 hour ago',
+    icon: Smartphone,
+    color: 'text-green-600',
   },
   {
-    id: '3',
+    id: '4',
     type: 'user_registered',
-    message: 'New user: Sarah Johnson',
-    timestamp: '1 hour ago',
+    message: 'New user: Sarah Johnson (iOS)',
+    timestamp: '2 hours ago',
     icon: UserPlus,
     color: 'text-purple-600',
   },
   {
-    id: '4',
+    id: '5',
     type: 'verification_rejected',
     message: 'Beach Club Sunset verification rejected',
-    timestamp: '2 hours ago',
+    timestamp: '3 hours ago',
     icon: XCircle,
     color: 'text-red-600',
   },

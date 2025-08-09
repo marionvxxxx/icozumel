@@ -1,7 +1,7 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle, Badge, Button } from '@cozumel/ui';
-import { Eye, CheckCircle, XCircle, Clock, AlertTriangle } from 'lucide-react';
+import { Eye, CheckCircle, XCircle, Clock, AlertTriangle, Smartphone } from 'lucide-react';
 
 const mockVerifications = [
   {
@@ -13,6 +13,7 @@ const mockVerifications = [
     riskScore: 0.2,
     submittedAt: '2024-01-15T10:30:00Z',
     documents: ['RFC', 'INE', 'Proof of Address'],
+    platform: 'iOS',
   },
   {
     id: '2',
@@ -23,6 +24,7 @@ const mockVerifications = [
     riskScore: 0.7,
     submittedAt: '2024-01-15T09:15:00Z',
     documents: ['Passport', 'Storefront Photo', 'Liveness Check'],
+    platform: 'Android',
   },
   {
     id: '3',
@@ -33,6 +35,7 @@ const mockVerifications = [
     riskScore: 0.1,
     submittedAt: '2024-01-15T08:45:00Z',
     documents: ['RFC', 'INE', 'Proof of Address', 'Business License'],
+    platform: 'iOS',
   },
 ];
 
@@ -52,13 +55,17 @@ const getRiskColor = (score: number) => {
   return 'text-red-600';
 };
 
+const getPlatformColor = (platform: string) => {
+  return platform === 'iOS' ? 'text-mobile-600' : 'text-green-600';
+};
+
 export function VerificationQueue() {
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center space-x-2">
           <Clock className="h-5 w-5" />
-          <span>Verification Queue</span>
+          <span>Business Verification Queue</span>
           <Badge variant="secondary">{mockVerifications.length}</Badge>
         </CardTitle>
       </CardHeader>
@@ -69,7 +76,11 @@ export function VerificationQueue() {
               <div className="flex items-center justify-between mb-3">
                 <div>
                   <h3 className="font-semibold text-lg">{verification.businessName}</h3>
-                  <p className="text-sm text-gray-600">{verification.ownerName} • {verification.type}</p>
+                  <p className="text-sm text-gray-600 flex items-center space-x-2">
+                    <span>{verification.ownerName} • {verification.type}</span>
+                    <Smartphone className={`h-4 w-4 ${getPlatformColor(verification.platform)}`} />
+                    <span className={getPlatformColor(verification.platform)}>{verification.platform}</span>
+                  </p>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Badge className={getStatusColor(verification.status)}>
