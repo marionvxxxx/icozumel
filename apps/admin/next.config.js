@@ -1,16 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Disable SWC completely for WebContainer compatibility
+  // Enable static export for Netlify
+  output: 'export',
+  trailingSlash: true,
+  
+  // Disable image optimization for static export
+  images: {
+    unoptimized: true,
+  },
+  
+  // Disable SWC for WebContainer compatibility
   swcMinify: false,
   
   // Use Babel instead of SWC
   experimental: {
     forceSwcTransforms: false,
-  },
-  
-  // Image configuration
-  images: {
-    domains: ['images.unsplash.com', 'images.pexels.com'],
   },
   
   // Disable webpack cache to avoid issues
