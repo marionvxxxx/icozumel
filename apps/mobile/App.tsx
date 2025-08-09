@@ -1,6 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { NativeBaseProvider, extendTheme } from 'native-base';
+import { GluestackUIProvider } from '@gluestack-ui/themed';
+import { config } from './src/theme/gluestack-ui.config';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
@@ -11,36 +12,6 @@ import MapScreen from './src/screens/MapScreen';
 import ExploreScreen from './src/screens/ExploreScreen';
 import BookingsScreen from './src/screens/BookingsScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
-
-// Cozumel theme
-const theme = extendTheme({
-  colors: {
-    primary: {
-      50: '#f0fdfa',
-      100: '#ccfbf1',
-      200: '#99f6e4',
-      300: '#5eead4',
-      400: '#2dd4bf',
-      500: '#14b8a6',
-      600: '#0d9488',
-      700: '#0f766e',
-      800: '#115e59',
-      900: '#134e4a',
-    },
-    secondary: {
-      50: '#fef7ee',
-      100: '#fdedd6',
-      200: '#fbd7ac',
-      300: '#f8ba77',
-      400: '#f59440',
-      500: '#f2751a',
-      600: '#e35a10',
-      700: '#bc4210',
-      800: '#963516',
-      900: '#792d15',
-    },
-  },
-});
 
 const Tab = createBottomTabNavigator();
 
@@ -66,7 +37,7 @@ function WebPreviewBanner() {
 
 export default function App() {
   return (
-    <NativeBaseProvider theme={theme}>
+    <GluestackUIProvider config={config}>
       <WebPreviewBanner />
       <NavigationContainer>
         <StatusBar style="auto" />
@@ -116,6 +87,6 @@ export default function App() {
           />
         </Tab.Navigator>
       </NavigationContainer>
-    </NativeBaseProvider>
+    </GluestackUIProvider>
   );
 }

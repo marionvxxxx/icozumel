@@ -11,6 +11,18 @@ const nextConfig = {
   
   // Ensure proper asset prefix for static export
   assetPrefix: '',
+  
+  // Enable Turbopack for development
+  experimental: {
+    turbo: {
+      rules: {
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
+        },
+      },
+    },
+  },
 }
 
 module.exports = nextConfig
