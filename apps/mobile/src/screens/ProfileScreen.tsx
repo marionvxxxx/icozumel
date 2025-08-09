@@ -6,47 +6,45 @@ import {
   VStack,
   HStack,
   Avatar,
-  Icon,
   Pressable,
   Divider,
   Switch,
 } from 'native-base';
-import { Ionicons } from '@expo/vector-icons';
 
 const menuItems = [
   {
     id: '1',
     title: 'Mi Negocio',
     subtitle: 'Administra tu negocio',
-    icon: 'storefront-outline',
+    icon: '🏪',
     action: 'business',
   },
   {
     id: '2',
     title: 'Favoritos',
     subtitle: 'Lugares guardados',
-    icon: 'heart-outline',
+    icon: '❤️',
     action: 'favorites',
   },
   {
     id: '3',
     title: 'Historial',
     subtitle: 'Reservas anteriores',
-    icon: 'time-outline',
+    icon: '📋',
     action: 'history',
   },
   {
     id: '4',
     title: 'Configuración',
     subtitle: 'Preferencias de la app',
-    icon: 'settings-outline',
+    icon: '⚙️',
     action: 'settings',
   },
   {
     id: '5',
     title: 'Ayuda',
     subtitle: 'Soporte y preguntas',
-    icon: 'help-circle-outline',
+    icon: '❓',
     action: 'help',
   },
 ];
@@ -63,23 +61,18 @@ export default function ProfileScreen() {
             <Avatar
               size="xl"
               source={{
-                uri: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+                uri: 'https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?w=150&h=150&fit=crop&crop=face',
               }}
             />
             <VStack alignItems="center" space={1}>
-              <Text fontSize="xl" fontWeight="bold">
+              <Text fontSize="2xl" fontWeight="bold">
                 Carlos Rodriguez
               </Text>
               <Text fontSize="md" color="gray.600">
                 carlos@email.com
               </Text>
               <HStack alignItems="center" space={1}>
-                <Icon
-                  as={Ionicons}
-                  name="location-outline"
-                  size="sm"
-                  color="gray.500"
-                />
+                <Text fontSize="lg">📍</Text>
                 <Text fontSize="sm" color="gray.500">
                   Cozumel, México
                 </Text>
@@ -123,7 +116,7 @@ export default function ProfileScreen() {
           <HStack justifyContent="space-between" alignItems="center">
             <VStack flex={1}>
               <Text fontSize="md" fontWeight="medium">
-                Notificaciones
+                Notificaciones 🔔
               </Text>
               <Text fontSize="sm" color="gray.600">
                 Recibir ofertas y actualizaciones
@@ -149,12 +142,7 @@ export default function ProfileScreen() {
                   rounded="lg"
                   _pressed={{ bg: 'gray.100' }}
                 >
-                  <Icon
-                    as={Ionicons}
-                    name={item.icon as any}
-                    size="lg"
-                    color="gray.600"
-                  />
+                  <Text fontSize="2xl">{item.icon}</Text>
                   <VStack flex={1} space={1}>
                     <Text fontSize="md" fontWeight="medium">
                       {item.title}
@@ -163,12 +151,9 @@ export default function ProfileScreen() {
                       {item.subtitle}
                     </Text>
                   </VStack>
-                  <Icon
-                    as={Ionicons}
-                    name="chevron-forward"
-                    size="sm"
-                    color="gray.400"
-                  />
+                  <Text fontSize="lg" color="gray.400">
+                    ▶️
+                  </Text>
                 </HStack>
               </Pressable>
             ))}
@@ -185,12 +170,7 @@ export default function ProfileScreen() {
               rounded="lg"
               _pressed={{ bg: 'red.50' }}
             >
-              <Icon
-                as={Ionicons}
-                name="log-out-outline"
-                size="lg"
-                color="red.500"
-              />
+              <Text fontSize="2xl">🚪</Text>
               <Text fontSize="md" fontWeight="medium" color="red.500">
                 Cerrar Sesión
               </Text>

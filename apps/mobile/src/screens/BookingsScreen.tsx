@@ -6,11 +6,9 @@ import {
   VStack,
   HStack,
   Badge,
-  Icon,
   Pressable,
   Center,
 } from 'native-base';
-import { Ionicons } from '@expo/vector-icons';
 
 const mockBookings = [
   {
@@ -20,6 +18,7 @@ const mockBookings = [
     time: '19:00',
     status: 'confirmed',
     guests: 4,
+    type: 'Cena',
   },
   {
     id: '2',
@@ -28,6 +27,16 @@ const mockBookings = [
     time: '09:00',
     status: 'pending',
     guests: 2,
+    type: 'Buceo',
+  },
+  {
+    id: '3',
+    businessName: 'Beach Club Sunset',
+    date: '2024-01-25',
+    time: '15:00',
+    status: 'confirmed',
+    guests: 6,
+    type: 'Club de Playa',
   },
 ];
 
@@ -61,21 +70,26 @@ export default function BookingsScreen() {
   return (
     <Box flex={1} bg="white" safeArea>
       <VStack space={4} p={4}>
-        <Text fontSize="2xl" fontWeight="bold" color="gray.800">
-          Mis Reservas
+        <Text fontSize="3xl" fontWeight="bold" color="gray.800">
+          Mis Reservas 📅
         </Text>
 
         {mockBookings.length > 0 ? (
           <ScrollView showsVerticalScrollIndicator={false}>
-            <VStack space={3}>
+            <VStack space={4}>
               {mockBookings.map((booking) => (
                 <Pressable key={booking.id}>
-                  <Box bg="white" rounded="xl" shadow={2} p={4}>
+                  <Box bg="white" rounded="xl" shadow={3} p={4}>
                     <VStack space={3}>
                       <HStack justifyContent="space-between" alignItems="center">
-                        <Text fontSize="lg" fontWeight="semibold">
-                          {booking.businessName}
-                        </Text>
+                        <VStack flex={1}>
+                          <Text fontSize="lg" fontWeight="semibold">
+                            {booking.businessName}
+                          </Text>
+                          <Text fontSize="sm" color="gray.600">
+                            {booking.type}
+                          </Text>
+                        </VStack>
                         <Badge
                           colorScheme={getStatusColor(booking.status)}
                           variant="solid"
@@ -87,12 +101,7 @@ export default function BookingsScreen() {
 
                       <VStack space={2}>
                         <HStack alignItems="center" space={2}>
-                          <Icon
-                            as={Ionicons}
-                            name="calendar-outline"
-                            size="sm"
-                            color="gray.500"
-                          />
+                          <Text fontSize="lg">📅</Text>
                           <Text fontSize="md" color="gray.600">
                             {new Date(booking.date).toLocaleDateString('es-MX', {
                               weekday: 'long',
@@ -104,24 +113,14 @@ export default function BookingsScreen() {
                         </HStack>
 
                         <HStack alignItems="center" space={2}>
-                          <Icon
-                            as={Ionicons}
-                            name="time-outline"
-                            size="sm"
-                            color="gray.500"
-                          />
+                          <Text fontSize="lg">🕐</Text>
                           <Text fontSize="md" color="gray.600">
                             {booking.time}
                           </Text>
                         </HStack>
 
                         <HStack alignItems="center" space={2}>
-                          <Icon
-                            as={Ionicons}
-                            name="people-outline"
-                            size="sm"
-                            color="gray.500"
-                          />
+                          <Text fontSize="lg">👥</Text>
                           <Text fontSize="md" color="gray.600">
                             {booking.guests} {booking.guests === 1 ? 'persona' : 'personas'}
                           </Text>
@@ -165,12 +164,7 @@ export default function BookingsScreen() {
         ) : (
           <Center flex={1}>
             <VStack alignItems="center" space={4}>
-              <Icon
-                as={Ionicons}
-                name="calendar-outline"
-                size="4xl"
-                color="gray.300"
-              />
+              <Text fontSize="6xl">📅</Text>
               <Text fontSize="lg" color="gray.500" textAlign="center">
                 No tienes reservas aún
               </Text>
