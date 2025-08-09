@@ -6,6 +6,13 @@
 [build.environment]
   NODE_VERSION = "18"
 
+# Specify which project to use for dev previews
+[dev]
+  command = "cd apps/admin && pnpm run dev"
+  port = 3001
+  publish = "apps/admin/.next"
+  framework = "#custom"
+
 # Handle client-side routing for SPA
 [[redirects]]
   from = "/*"

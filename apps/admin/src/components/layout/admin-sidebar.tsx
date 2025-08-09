@@ -15,11 +15,7 @@ import {
   Bell,
   Flag
 } from 'lucide-react';
-
-// Utility function for class names
-function cn(...classes: (string | undefined | null | false)[]): string {
-  return classes.filter(Boolean).join(' ');
-}
+import { cn } from '@cozumel/ui';
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: LayoutDashboard },
