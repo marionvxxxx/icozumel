@@ -1,0 +1,18 @@
+[build]
+  command = "npm install && npm run build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Dev configuration for this specific project
+[dev]
+  command = "npm run dev"
+  port = 3001
+  framework = "next"
+
+# Handle client-side routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
