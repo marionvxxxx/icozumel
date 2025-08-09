@@ -1,6 +1,8 @@
 'use client';
 
 import { Bell, Search, User, Smartphone } from 'lucide-react';
+import { Input } from '../ui/input';
+import { Button } from '../ui/button';
 
 export function AdminHeader() {
   return (

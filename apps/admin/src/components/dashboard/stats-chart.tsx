@@ -1,6 +1,7 @@
 'use client';
 
 import { TrendingUp } from 'lucide-react';
+import { Card, CardHeader, CardTitle, CardContent } from '../ui/card';
 
 export function StatsChart() {
   return (

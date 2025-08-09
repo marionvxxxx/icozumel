@@ -1,6 +1,9 @@
 'use client';
 
 import { Eye, CheckCircle, XCircle, Clock, AlertTriangle, Smartphone } from 'lucide-react';
+import { Card, CardHeader, CardTitle, CardContent } from '../ui/card';
+import { Badge } from '../ui/badge';
+import { Button } from '../ui/button';
 
 const mockVerifications = [
   {

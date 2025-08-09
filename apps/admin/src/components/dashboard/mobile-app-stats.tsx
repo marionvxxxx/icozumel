@@ -1,6 +1,7 @@
 'use client';
 
 import { Smartphone, TrendingUp, Users, Download } from 'lucide-react';
+import { Card, CardHeader, CardTitle, CardContent } from '../ui/card';
 
 export function MobileAppStats() {
   return (
