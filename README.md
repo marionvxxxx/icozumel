@@ -1,145 +1,118 @@
-# LocalVibe - Local Discovery Platform
+# Cozumel Business Marketplace
 
-A modern, high-performance local discovery platform built with Next.js 14, TypeScript, and TailwindCSS.
+A full-stack, self-serve business marketplace web app for Cozumel, MX, targeting local businesses and tourists with English/Spanish support.
 
 ## 🚀 Features
 
-- **Modern Tech Stack**: Next.js 14 with App Router, TypeScript, TailwindCSS
-- **Component Library**: Built with Shadcn/ui for consistent, accessible components
-- **Performance Optimized**: Core Web Vitals optimized, image optimization, code splitting
-- **SEO Ready**: Structured data, meta tags, sitemaps, OpenGraph support
-- **Responsive Design**: Mobile-first approach with beautiful animations
-- **Accessibility**: WCAG AA compliant with proper ARIA labels and keyboard navigation
+- **Business Verification**: Automated 7-9 minute verification process with tier-based access
+- **Feature Locks**: Progressive feature unlocking based on verification status
+- **Ad Studio**: Self-serve advertising platform with multiple ad formats
+- **Multi-language**: Full Spanish/English support with auto-translation
+- **Map-first Discovery**: Interactive map with business locations
+- **Automated Safety**: Content moderation and compliance checks
+- **Payments & Bookings**: Stripe integration for transactions
 
 ## 🛠️ Tech Stack
 
-- **Framework**: Next.js 14 (App Router)
-- **Language**: TypeScript
-- **Styling**: TailwindCSS
-- **Components**: Shadcn/ui + Radix UI
-- **Animations**: Framer Motion
-- **Icons**: Lucide React
-- **Database**: Prisma + SQLite (demo) / PostgreSQL (production)
-- **Maps**: Mapbox GL JS
-- **Analytics**: Vercel Analytics
-- **Testing**: Playwright (E2E) + Vitest (Unit)
-- **Deployment**: Vercel
+- **Monorepo**: Turborepo + pnpm workspaces
+- **Web**: Next.js 14 (App Router, React Server Components)
+- **UI**: Tailwind CSS, shadcn/ui, Lucide React icons
+- **APIs**: tRPC with Zod validation
+- **Database**: PostgreSQL (Supabase) + Prisma
+- **Auth**: Supabase Auth (email/phone/OAuth)
+- **Payments**: Stripe Connect + Stripe Identity
+- **Storage**: Supabase Storage
+- **Search**: Typesense (bilingual)
+- **Maps**: Mapbox GL
+- **Analytics**: PostHog
+- **Safety**: Google Cloud Vision API
 
 ## 📦 Installation
 
 ```bash
-# Clone the repository
-git clone <repository-url>
-cd localvibe
-
 # Install dependencies
-npm install
+pnpm install
 
 # Set up environment variables
-cp .env.example .env.local
+cp apps/web/.env.example apps/web/.env.local
 
-# Run development server
-npm run dev
+# Generate database client
+pnpm db:generate
+
+# Push database schema
+pnpm db:push
+
+# Seed database with Cozumel data
+pnpm db:seed
+
+# Start development server
+pnpm dev
 ```
 
 ## 🏗️ Project Structure
 
 ```
-src/
-├── app/                    # Next.js App Router pages
-│   ├── business/[slug]/   # Dynamic business pages
-│   ├── events/            # Events pages
-│   └── layout.tsx         # Root layout
-├── components/            # Reusable components
-│   ├── ui/               # Base UI components (Shadcn)
-│   └── layout/           # Layout components
-├── lib/                  # Utilities and configurations
-│   ├── types.ts          # TypeScript types
-│   └── data.ts           # Mock data
-└── styles/               # Global styles
+apps/
+├── web/                    # Next.js web application
+packages/
+├── ui/                     # Shared UI components (shadcn/ui)
+├── database/               # Prisma schema and client
+└── i18n/                   # Internationalization
 ```
 
-## 🎨 Design System
+## 🎯 Core Features
 
-### Colors
-- **Primary**: Blue (#0ea5e9)
-- **Accent**: Orange (#f97316)
-- **Background**: White/Dark mode support
-- **Text**: Semantic color tokens
+### Business Verification Tiers
 
-### Typography
-- **Font**: Inter (Google Fonts)
-- **Scale**: Tailwind's default scale
-- **Weights**: 300-900
+- **Tier 0 (Unverified)**: Browse only
+- **Tier 1 (Basic)**: 10 listings, 1 coupon, no payments/ads
+- **Tier 2 (Commercial)**: Unlimited listings, bookings, ads, analytics
 
-### Components
-All components follow the Shadcn/ui design system with custom LocalVibe branding.
+### Ad Studio Modules
 
-## 📱 Pages
+- Sponsored Map Pin
+- Top Search Slot
+- Drops (limited-time promos)
+- Moment Ads (weather/cruise-triggered)
+- Guide Sponsorship
+- Coupon Boost
 
-### Home (`/`)
-- Hero section with search bar
-- Featured businesses and events
-- Category navigation
-- Social proof and statistics
+### Feature Locks
 
-### Business Detail (`/business/[slug]`)
-- Business information and photos
-- Reviews and ratings
-- Contact details and hours
-- Map integration
-- Similar businesses
+Features are progressively unlocked based on verification tier:
+- 🔒 Ads — Verify your business
+- 🔒 Payments — Verify your business
+- 🔒 Bookings — Verify your business
+- 🔒 Analytics — Upgrade to Tier 2
 
-### Browse (`/browse`)
-- Search and filter interface
-- Map/list view toggle
-- Pagination/infinite scroll
-- Advanced filtering
+## 🌐 Multi-language Support
 
-### Events (`/events` & `/event/[slug]`)
-- Event listings and details
-- Calendar integration
-- Venue information
-- Ticket purchasing
+The app supports both Spanish (primary) and English with:
+- Runtime language detection
+- Auto-translation for user content
+- Bilingual search with synonyms
+- Localized currency and date formats
 
-## 🔍 SEO Features
+## 🗺️ Map Integration
 
-- **Meta Tags**: Dynamic title, description, and OpenGraph tags
-- **Structured Data**: LocalBusiness and Event JSON-LD
-- **Sitemaps**: Dynamic XML sitemaps
-- **Performance**: Lighthouse score >90
-- **Core Web Vitals**: LCP <2.5s, CLS <0.1, INP <200ms
+- Interactive Mapbox GL map
+- Business location pins
+- Geo-based search and filtering
+- Location verification for businesses
 
-## ♿ Accessibility
+## 🔒 Safety & Compliance
 
-- **Semantic HTML**: Proper landmarks and headings
-- **ARIA Labels**: Screen reader support
-- **Keyboard Navigation**: Full keyboard accessibility
-- **Color Contrast**: WCAG AA compliant
-- **Focus Management**: Visible focus indicators
+- Automated content moderation using Google Cloud Vision
+- Duplicate detection and spam prevention
+- Price and hours validation
+- Reputation-based reach adjustment
 
-## 📊 Analytics
+## 📱 Mobile-First Design
 
-Track key user interactions:
-- `search_submitted`
-- `result_click`
-- `filter_applied`
-- `save_business`
-- `review_submitted`
-- `cta_signup`
-
-## 🧪 Testing
-
-```bash
-# Unit tests
-npm run test
-
-# E2E tests
-npm run test:e2e
-
-# Lighthouse CI
-npm run lighthouse
-```
+- Responsive design with Tailwind CSS
+- Bottom navigation for mobile
+- Touch-friendly interactions
+- Progressive Web App features
 
 ## 🚀 Deployment
 
@@ -147,35 +120,20 @@ The application is optimized for Vercel deployment:
 
 ```bash
 # Build for production
-npm run build
+pnpm build
 
 # Deploy to Vercel
 vercel --prod
 ```
 
-## 📈 Performance
+## 📊 Analytics
 
-- **Image Optimization**: Next.js Image component with WebP support
-- **Code Splitting**: Automatic route-based splitting
-- **Caching**: Aggressive caching strategies
-- **Bundle Analysis**: Webpack Bundle Analyzer integration
-
-## 🔧 Configuration
-
-### Environment Variables
-
-```env
-NEXT_PUBLIC_MAPBOX_TOKEN=your_mapbox_token
-DATABASE_URL=your_database_url
-NEXT_PUBLIC_ANALYTICS_ID=your_analytics_id
-```
-
-### Database Schema
-
-The application uses Prisma with the following main entities:
-- **Business**: Local businesses with location, hours, photos
-- **Event**: Community events with venue and timing
-- **Review**: User reviews with ratings and photos
+Track key user interactions with PostHog:
+- Business registrations
+- Verification completions
+- Ad campaign launches
+- Booking conversions
+- Search queries
 
 ## 🤝 Contributing
 
@@ -188,7 +146,3 @@ The application uses Prisma with the following main entities:
 ## 📄 License
 
 MIT License - see LICENSE file for details.
-
-## 🆘 Support
-
-For support, email support@localvibe.com or create an issue on GitHub.

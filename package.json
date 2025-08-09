@@ -1,5 +1,5 @@
 {
-  "name": "localvibe-monorepo",
+  "name": "cozumel-marketplace",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,21 +8,15 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "test": "turbo test",
-    "test:e2e": "turbo test:e2e",
     "typecheck": "turbo typecheck",
     "clean": "turbo clean",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "changeset": "changeset",
-    "version-packages": "changeset version",
-    "release": "turbo build --filter=!@localvibe/e2e && changeset publish",
     "db:generate": "turbo db:generate",
     "db:push": "turbo db:push",
     "db:seed": "turbo db:seed"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.1",
-    "@localvibe/eslint-config": "workspace:*",
-    "@localvibe/tsconfig": "workspace:*",
+    "@turbo/gen": "^1.11.2",
     "prettier": "^3.1.1",
     "turbo": "^1.11.2",
     "typescript": "^5.3.3"

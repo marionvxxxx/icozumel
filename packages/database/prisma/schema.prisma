@@ -1,0 +1,319 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  TOURIST
+  BUSINESS_OWNER
+  ADMIN
+}
+
+enum VerificationTier {
+  TIER0 // Unverified
+  TIER1 // Basic verification
+  TIER2 // Commercial verification
+}
+
+enum VerificationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  EXPIRED
+}
+
+enum FeatureLockState {
+  LOCKED
+  UNLOCKED
+  SUSPENDED
+}
+
+enum ListingType {
+  PRODUCT
+  SERVICE
+  EVENT
+  EXPERIENCE
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+  NO_SHOW
+}
+
+enum AdCampaignStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  COMPLETED
+  REJECTED
+}
+
+enum AdModule {
+  SPONSORED_PIN
+  TOP_SEARCH
+  DROPS
+  MOMENT_ADS
+  GUIDE_SPONSORSHIP
+  COUPON_BOOST
+}
+
+enum ComplianceCheckType {
+  CONTENT_MODERATION
+  PRICE_VALIDATION
+  DUPLICATE_DETECTION
+  SPAM_CHECK
+}
+
+enum ComplianceResult {
+  PASSED
+  FAILED
+  NEEDS_REVIEW
+}
+
+model User {
+  id               String   @id @default(cuid())
+  email            String   @unique
+  phone            String?
+  role             UserRole @default(TOURIST)
+  locale           String   @default("es")
+  reputationScore  Float    @default(0)
+  badges           String[] // JSON array of badge IDs
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  // Relations
+  businesses       Business[]
+  bookings         Booking[]
+  reviews          Review[]
+  
+  @@map("users")
+}
+
+model Business {
+  id          String   @id @default(cuid())
+  ownerId     String
+  name        String
+  slug        String   @unique
+  description String?
+  category    String
+  subcategory String?
+  geohash     String
+  latitude    Float
+  longitude   Float
+  address     String
+  phone       String?
+  email       String?
+  website     String?
+  hours       Json? // Opening hours
+  tags        String[] // Amenities, features
+  images      String[] // Image URLs
+  verifiedTier VerificationTier @default(TIER0)
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  owner              User                   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  verification       BusinessVerification?
+  featureLocks       FeatureLock[]
+  listings           Listing[]
+  adCampaigns        AdCampaign[]
+  reviews            Review[]
+  complianceChecks   ComplianceCheck[]
+  
+  @@map("businesses")
+}
+
+model BusinessVerification {
+  id         String             @id @default(cuid())
+  businessId String             @unique
+  status     VerificationStatus @default(PENDING)
+  riskScore  Float              @default(0)
+  checks     Json // Verification check results
+  documents  Json // Document URLs and metadata
+  notes      String?
+  reviewedAt DateTime?
+  expiresAt  DateTime?
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
+
+  // Relations
+  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  
+  @@map("business_verifications")
+}
+
+model FeatureLock {
+  id         String           @id @default(cuid())
+  businessId String
+  feature    String // ads, payments, bookings, etc.
+  state      FeatureLockState @default(LOCKED)
+  reason     String?
+  unlockedAt DateTime?
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+
+  // Relations
+  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  
+  @@unique([businessId, feature])
+  @@map("feature_locks")
+}
+
+model Listing {
+  id          String      @id @default(cuid())
+  businessId  String
+  type        ListingType
+  title       String
+  description String?
+  price       Float?
+  currency    String      @default("MXN")
+  images      String[]
+  tags        String[]
+  stock       Int?        // For products
+  duration    Int?        // For services (minutes)
+  schedule    Json?       // Available time slots
+  active      Boolean     @default(true)
+  featured    Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  // Relations
+  business         Business          @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  bookings         Booking[]
+  complianceChecks ComplianceCheck[]
+  
+  @@map("listings")
+}
+
+model Booking {
+  id              String        @id @default(cuid())
+  listingId       String
+  userId          String
+  status          BookingStatus @default(PENDING)
+  timeSlot        DateTime?
+  duration        Int?          // minutes
+  quantity        Int           @default(1)
+  totalAmount     Float
+  currency        String        @default("MXN")
+  paymentIntentId String?
+  notes           String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  // Relations
+  listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("bookings")
+}
+
+model Review {
+  id         String   @id @default(cuid())
+  businessId String
+  userId     String
+  rating     Int      // 1-5
+  title      String?
+  content    String?
+  images     String[]
+  helpful    Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Relations
+  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([businessId, userId]) // One review per user per business
+  @@map("reviews")
+}
+
+model AdCampaign {
+  id          String            @id @default(cuid())
+  businessId  String
+  module      AdModule
+  title       String
+  description String?
+  targeting   Json // Geo, time, language, category filters
+  budget      Json // Daily/total budget, CPC/CPA
+  creative    Json // Images, videos, copy
+  status      AdCampaignStatus  @default(DRAFT)
+  startDate   DateTime?
+  endDate     DateTime?
+  metrics     Json? // Impressions, clicks, conversions
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  // Relations
+  business         Business          @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  complianceChecks ComplianceCheck[]
+  
+  @@map("ad_campaigns")
+}
+
+model ComplianceCheck {
+  id         String              @id @default(cuid())
+  targetId   String // Business, Listing, or AdCampaign ID
+  targetType String // "business", "listing", "ad_campaign"
+  type       ComplianceCheckType
+  result     ComplianceResult
+  reasons    String[] // Specific issues found
+  confidence Float?   // AI confidence score
+  reviewedBy String?  // Admin user ID if manually reviewed
+  createdAt  DateTime            @default(now())
+
+  // Relations
+  business    Business?   @relation(fields: [targetId], references: [id], onDelete: Cascade)
+  listing     Listing?    @relation(fields: [targetId], references: [id], onDelete: Cascade)
+  adCampaign  AdCampaign? @relation(fields: [targetId], references: [id], onDelete: Cascade)
+  
+  @@map("compliance_checks")
+}
+
+model Guide {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String?
+  content     Json // Rich content with sections
+  images      String[]
+  tags        String[]
+  category    String
+  featured    Boolean  @default(false)
+  published   Boolean  @default(false)
+  views       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("guides")
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  icon        String?
+  color       String?
+  parentId    String?
+  order       Int      @default(0)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Self-referential relation for subcategories
+  parent   Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children Category[] @relation("CategoryHierarchy")
+  
+  @@map("categories")
+}
