@@ -4,16 +4,16 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "npx turbo build",
-    "dev": "npx turbo dev",
-    "lint": "npx turbo lint",
-    "test": "npx turbo test",
-    "typecheck": "npx turbo typecheck",
-    "clean": "npx turbo clean",
+    "build": "cd apps/web && npm run build",
+    "dev": "cd apps/web && npm run dev",
+    "lint": "cd apps/web && npm run lint",
+    "test": "cd apps/web && npm run test",
+    "typecheck": "cd apps/web && npm run typecheck",
+    "clean": "rm -rf node_modules apps/web/node_modules packages/*/node_modules",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "db:generate": "npx turbo db:generate",
-    "db:push": "npx turbo db:push",
-    "db:seed": "npx turbo db:seed"
+    "db:generate": "cd packages/database && npm run db:generate",
+    "db:push": "cd packages/database && npm run db:push",
+    "db:seed": "cd packages/database && npm run db:seed"
   },
   "devDependencies": {
     "@turbo/gen": "^1.11.2",
