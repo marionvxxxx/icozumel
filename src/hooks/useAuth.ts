@@ -85,3 +85,5 @@ export const useAuthState = () => {
     loading
   };
 };
+
+export { AuthContext }
