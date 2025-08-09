@@ -3,23 +3,14 @@ const nextConfig = {
   images: {
     domains: ['images.unsplash.com', 'images.pexels.com'],
   },
-  // Completely disable SWC to avoid WebContainer issues
+  // Disable SWC to avoid WebContainer issues
   swcMinify: false,
-  compiler: {
-    // Force use of Babel instead of SWC
-  },
-  // Remove experimental settings that cause issues
+  // Ensure proper transpilation
+  transpilePackages: ['@cozumel/ui', '@cozumel/database', '@cozumel/i18n'],
+  // Disable experimental features that might cause issues
   experimental: {},
-  // Disable webpack optimization that might use SWC
-  webpack: (config, { dev, isServer }) => {
-    // Disable SWC loader
-    config.module.rules.forEach((rule) => {
-      if (rule.use && rule.use.loader === 'next-swc-loader') {
-        rule.use.loader = 'babel-loader';
-      }
-    });
-    return config;
-  },
+  // Output standalone for better deployment
+  output: 'standalone',
 }
 
 module.exports = nextConfig
