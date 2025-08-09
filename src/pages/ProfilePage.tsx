@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
 import { Settings, Crown, Star, MapPin, Award, LogOut } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
+import PointsDisplay from '../components/Gamification/PointsDisplay';
+import ReviewForm from '../components/Reviews/ReviewForm';
 
 const ProfilePage: React.FC = () => {
   const { user, logout } = useAuth();
   const [activeTab, setActiveTab] = useState('profile');
+  const [showReviewForm, setShowReviewForm] = useState(false);
 
+  const mockRecentEarnings = [
+    { action: 'Reviewed Coastal Café', points: 10, timestamp: '2 hours ago' },
+    { action: 'Checked in at Art Gallery', points: 5, timestamp: '1 day ago' },
+    { action: 'Shared local event', points: 3, timestamp: '2 days ago' },
+    { action: 'Completed profile', points: 25, timestamp: '1 week ago' }
+  ];
   if (!user) {
     return (
       <div className="pb-20 bg-gray-50 min-h-screen flex items-center justify-center">
@@ -55,6 +64,13 @@ const ProfilePage: React.FC = () => {
             </div>
           </div>
         </div>
+
+        <PointsDisplay
+          points={user.points}
+          level={Math.floor(user.points / 50) + 1}
+          nextLevelPoints={(Math.floor(user.points / 50) + 1) * 50}
+          recentEarnings={mockRecentEarnings}
+        />
 
         {/* Badges */}
         <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
@@ -142,6 +158,37 @@ const ProfilePage: React.FC = () => {
                   <p className="text-sm text-gray-900 mb-1">Amazing coffee and atmosphere!</p>
                   <p className="text-xs text-gray-500">Coastal Café • 2 days ago</p>
                 </div>
+                <div className="border-l-4 border-secondary-500 pl-3">
+                  <div className="flex items-center space-x-1 mb-1">
+                    {Array.from({ length: 4 }, (_, i) => (
+                      <Star key={i} size={12} className="text-yellow-400 fill-current" />
+                    ))}
+                    <Star size={12} className="text-gray-300" />
+                  </div>
+                  <p className="text-sm text-gray-900 mb-1">Great selection of outdoor gear!</p>
+                  <p className="text-xs text-gray-500">Adventure Gear Co. • 1 week ago</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowReviewForm(true)}
+                className="w-full mt-3 btn-primary"
+              >
+                Write New Review
+              </button>
+            </div>
+
+            {/* Stats */}
+            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
+              <h3 className="font-semibold text-gray-900 mb-3">Your Impact</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-primary-600">12</div>
+                  <div className="text-sm text-gray-600">Reviews Written</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-secondary-600">847</div>
+                  <div className="text-sm text-gray-600">People Helped</div>
+                </div>
               </div>
             </div>
           </div>
@@ -219,6 +266,19 @@ const ProfilePage: React.FC = () => {
               <span>Sign Out</span>
             </button>
           </div>
+        )}
+
+        {/* Review Form Modal */}
+        {showReviewForm && (
+          <ReviewForm
+            businessId="1"
+            businessName="Coastal Café"
+            onSubmit={(review) => {
+              console.log('Review submitted:', review);
+              setShowReviewForm(false);
+            }}
+            onCancel={() => setShowReviewForm(false)}
+          />
         )}
       </div>
     </div>

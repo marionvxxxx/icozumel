@@ -4,6 +4,7 @@ import { useAuthState } from './hooks/useAuth';
 import Header from './components/Layout/Header';
 import BottomNavigation from './components/Layout/BottomNavigation';
 import AuthModal from './components/Auth/AuthModal';
+import FloatingActionButton from './components/Common/FloatingActionButton';
 import HomePage from './pages/HomePage';
 import DiscoverPage from './pages/DiscoverPage';
 import EventsPage from './pages/EventsPage';
@@ -70,31 +71,29 @@ function App() {
 
         {/* Floating Action Button for Quick Actions */}
         {authState.user && (
-          <button
-            onClick={() => setShowAuthModal(true)}
-            className="fixed bottom-24 right-4 w-14 h-14 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center z-40"
-          >
-            <span className="text-2xl">+</span>
-          </button>
+          <FloatingActionButton
+            onAction={(action) => {
+              console.log('FAB action:', action);
+              // Handle different actions
+              switch (action) {
+                case 'review':
+                  // Open review modal
+                  break;
+                case 'photo':
+                  // Open camera/photo upload
+                  break;
+                case 'checkin':
+                  // Open check-in modal
+                  break;
+                case 'event':
+                  // Navigate to create event
+                  break;
+              }
+            }}
+          />
         )}
 
         {/* Welcome Banner for New Users */}
-        {!authState.user && !authState.loading && (
-          <div className="fixed bottom-24 left-4 right-4 bg-gradient-to-r from-primary-500 to-secondary-500 text-white p-4 rounded-xl shadow-lg z-40">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="font-semibold mb-1">Welcome to LocalVibe!</h3>
-                <p className="text-sm text-primary-100">Sign up to discover amazing local places</p>
-              </div>
-              <button
-                onClick={() => setShowAuthModal(true)}
-                className="bg-white text-primary-600 px-4 py-2 rounded-lg font-medium hover:bg-primary-50 transition-colors"
-              >
-                Join Now
-              </button>
-            </div>
-          </div>
-        )}
       </div>
     </AuthContext.Provider>
   );

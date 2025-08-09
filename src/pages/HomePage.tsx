@@ -2,12 +2,22 @@ import React from 'react';
 import { TrendingUp, Star, MapPin } from 'lucide-react';
 import BusinessCard from '../components/Business/BusinessCard';
 import PostCard from '../components/Feed/PostCard';
+import NotificationBanner from '../components/Common/NotificationBanner';
+import PointsDisplay from '../components/Gamification/PointsDisplay';
+import AROverlay from '../components/Tourism/AROverlay';
 import { mockBusinesses, mockPosts } from '../data/mockData';
+import { useAuth } from '../hooks/useAuth';
 
 const HomePage: React.FC = () => {
+  const { user } = useAuth();
   const featuredBusinesses = mockBusinesses.filter(b => b.isFeatured);
   const recentPosts = mockPosts.slice(0, 3);
 
+  const mockRecentEarnings = [
+    { action: 'Reviewed Coastal Café', points: 10, timestamp: '2 hours ago' },
+    { action: 'Checked in at Art Gallery', points: 5, timestamp: '1 day ago' },
+    { action: 'Shared local event', points: 3, timestamp: '2 days ago' }
+  ];
   return (
     <div className="pb-20 bg-gray-50 min-h-screen">
       {/* Hero Section */}
@@ -37,6 +47,30 @@ const HomePage: React.FC = () => {
       </div>
 
       <div className="max-w-md mx-auto px-4 space-y-6 mt-6">
+        {/* Welcome Banner for New Users */}
+        {!user && (
+          <NotificationBanner
+            type="welcome"
+            title="Welcome to LocalVibe!"
+            message="Discover amazing local places and connect with your community"
+            actionText="Sign Up Now"
+            onAction={() => console.log('Open auth modal')}
+          />
+        )}
+
+        {/* Points Display for Logged In Users */}
+        {user && (
+          <PointsDisplay
+            points={user.points}
+            level={Math.floor(user.points / 50) + 1}
+            nextLevelPoints={(Math.floor(user.points / 50) + 1) * 50}
+            recentEarnings={mockRecentEarnings}
+          />
+        )}
+
+        {/* AR Discovery */}
+        <AROverlay />
+
         {/* Featured Businesses */}
         <section>
           <div className="flex items-center justify-between mb-4">
@@ -83,19 +117,43 @@ const HomePage: React.FC = () => {
         </section>
 
         {/* Quick Actions */}
-        <section className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
-          <h3 className="font-semibold text-gray-900 mb-3">Quick Actions</h3>
-          <div className="grid grid-cols-2 gap-3">
-            <button className="flex items-center justify-center space-x-2 bg-primary-50 text-primary-700 p-3 rounded-lg hover:bg-primary-100 transition-colors">
-              <MapPin size={18} />
-              <span className="text-sm font-medium">Find Nearby</span>
-            </button>
-            <button className="flex items-center justify-center space-x-2 bg-secondary-50 text-secondary-700 p-3 rounded-lg hover:bg-secondary-100 transition-colors">
-              <Star size={18} />
-              <span className="text-sm font-medium">Write Review</span>
-            </button>
+        {user && (
+          <section className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
+            <h3 className="font-semibold text-gray-900 mb-3">Quick Actions</h3>
+            <div className="grid grid-cols-2 gap-3">
+              <button className="flex items-center justify-center space-x-2 bg-primary-50 text-primary-700 p-3 rounded-lg hover:bg-primary-100 transition-colors">
+                <MapPin size={18} />
+                <span className="text-sm font-medium">Find Nearby</span>
+              </button>
+              <button className="flex items-center justify-center space-x-2 bg-secondary-50 text-secondary-700 p-3 rounded-lg hover:bg-secondary-100 transition-colors">
+                <Star size={18} />
+                <span className="text-sm font-medium">Write Review</span>
+              </button>
+            </div>
+          </section>
+        )}
+
+        {/* Promotional Banner */}
+        <NotificationBanner
+          type="promotion"
+          title="Summer Festival This Weekend!"
+          message="Join us for live music, food trucks, and local vendors"
+          actionText="Get Tickets"
+          onAction={() => console.log('Navigate to event')}
+        />
+
+        {/* Achievement Banner for Users */}
+        {user && user.points > 100 && (
+          <div className="animate-bounce">
+            <NotificationBanner
+              type="achievement"
+              title="Level Up!"
+              message="You've earned the Explorer badge! Keep discovering amazing places."
+              actionText="View Badges"
+              onAction={() => console.log('Navigate to profile')}
+            />
           </div>
-        </section>
+        )}
       </div>
     </div>
   );

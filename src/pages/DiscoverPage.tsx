@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Search, Filter, MapPin, Grid, List } from 'lucide-react';
 import BusinessCard from '../components/Business/BusinessCard';
+import SearchBar from '../components/Common/SearchBar';
+import LoadingSpinner from '../components/Common/LoadingSpinner';
 import { mockBusinesses } from '../data/mockData';
 
 const DiscoverPage: React.FC = () => {
@@ -8,8 +10,16 @@ const DiscoverPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [showFilters, setShowFilters] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const categories = ['All', 'Restaurant', 'Retail', 'Arts & Culture', 'Entertainment', 'Services'];
+
+  const handleSearch = async (query: string) => {
+    setSearchQuery(query);
+    setIsLoading(true);
+    // Simulate API call
+    setTimeout(() => setIsLoading(false), 1000);
+  };
 
   const filteredBusinesses = mockBusinesses.filter(business => {
     const matchesSearch = business.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -22,20 +32,20 @@ const DiscoverPage: React.FC = () => {
     <div className="pb-20 bg-gray-50 min-h-screen">
       <div className="max-w-md mx-auto px-4 py-4 space-y-4">
         {/* Search Bar */}
-        <div className="relative">
-          <Search size={20} className="absolute left-3 top-3 text-gray-400" />
-          <input
-            type="text"
-            placeholder="Search businesses, services..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="input-field pl-10 pr-12"
-          />
+        <SearchBar
+          placeholder="Search businesses, services..."
+          onSearch={handleSearch}
+          showRecentSearches={true}
+        />
+
+        {/* Filter Toggle */}
+        <div className="flex justify-end">
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
+            className="flex items-center space-x-2 px-3 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
           >
-            <Filter size={20} />
+            <Filter size={16} />
+            <span className="text-sm font-medium">Filters</span>
           </button>
         </div>
 
@@ -105,9 +115,14 @@ const DiscoverPage: React.FC = () => {
         {/* Results */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold text-gray-900">
-              {filteredBusinesses.length} Results
-            </h2>
+            <div>
+              <h2 className="text-lg font-bold text-gray-900">
+                {isLoading ? 'Searching...' : `${filteredBusinesses.length} Results`}
+              </h2>
+              {searchQuery && (
+                <p className="text-sm text-gray-600">for "{searchQuery}"</p>
+              )}
+            </div>
             <select className="text-sm border border-gray-300 rounded-lg px-3 py-1">
               <option>Sort by Relevance</option>
               <option>Sort by Rating</option>
@@ -116,16 +131,22 @@ const DiscoverPage: React.FC = () => {
             </select>
           </div>
 
-          <div className={viewMode === 'grid' ? 'space-y-4' : 'space-y-3'}>
-            {filteredBusinesses.map((business) => (
-              <BusinessCard
-                key={business.id}
-                business={business}
-                compact={viewMode === 'list'}
-                onClick={() => console.log('Navigate to business:', business.id)}
-              />
-            ))}
-          </div>
+          {isLoading ? (
+            <div className="flex justify-center py-12">
+              <LoadingSpinner size="lg" />
+            </div>
+          ) : (
+            <div className={viewMode === 'grid' ? 'space-y-4' : 'space-y-3'}>
+              {filteredBusinesses.map((business) => (
+                <BusinessCard
+                  key={business.id}
+                  business={business}
+                  compact={viewMode === 'list'}
+                  onClick={() => console.log('Navigate to business:', business.id)}
+                />
+              ))}
+            </div>
+          )}
 
           {filteredBusinesses.length === 0 && (
             <div className="text-center py-12">
@@ -136,6 +157,22 @@ const DiscoverPage: React.FC = () => {
               <p className="text-gray-500">Try adjusting your search or filters</p>
             </div>
           )}
+        </div>
+
+        {/* Quick Filters */}
+        <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
+          <h3 className="font-semibold text-gray-900 mb-3">Popular Searches</h3>
+          <div className="flex flex-wrap gap-2">
+            {['Coffee shops', 'Italian food', 'Art galleries', 'Live music', 'Shopping'].map((term) => (
+              <button
+                key={term}
+                onClick={() => handleSearch(term)}
+                className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition-colors"
+              >
+                {term}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>

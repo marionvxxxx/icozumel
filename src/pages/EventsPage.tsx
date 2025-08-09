@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import { Calendar, Filter, Plus } from 'lucide-react';
 import EventCard from '../components/Events/EventCard';
+import ItineraryBuilder from '../components/Tourism/ItineraryBuilder';
+import NotificationBanner from '../components/Common/NotificationBanner';
 import { mockEvents } from '../data/mockData';
+import { useAuth } from '../hooks/useAuth';
 
 const EventsPage: React.FC = () => {
+  const { user } = useAuth();
   const [selectedFilter, setSelectedFilter] = useState('All');
   const [showFilters, setShowFilters] = useState(false);
+  const [showItinerary, setShowItinerary] = useState(false);
 
   const categories = ['All', 'Music', 'Community', 'Arts & Culture', 'Sports', 'Food & Drink'];
 
@@ -20,6 +25,34 @@ const EventsPage: React.FC = () => {
   return (
     <div className="pb-20 bg-gray-50 min-h-screen">
       <div className="max-w-md mx-auto px-4 py-4 space-y-4">
+        {/* Itinerary Promotion */}
+        {user && !showItinerary && (
+          <NotificationBanner
+            type="update"
+            title="Plan Your Perfect Day!"
+            message="Create a custom itinerary with events and places you want to visit"
+            actionText="Build Itinerary"
+            onAction={() => setShowItinerary(true)}
+          />
+        )}
+
+        {/* Itinerary Builder */}
+        {showItinerary && (
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-bold text-gray-900">Itinerary Builder</h2>
+              <button
+                onClick={() => setShowItinerary(false)}
+                className="text-sm text-gray-600 hover:text-gray-800"
+              >
+                Back to Events
+              </button>
+            </div>
+            <ItineraryBuilder onSave={(itinerary) => console.log('Saved itinerary:', itinerary)} />
+            <hr className="border-gray-200" />
+          </div>
+        )}
+
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
@@ -138,17 +171,29 @@ const EventsPage: React.FC = () => {
         </div>
 
         {/* Featured Event Banner */}
-        <div className="bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl p-6 relative overflow-hidden">
-          <div className="relative z-10">
-            <h3 className="text-lg font-bold mb-2">Summer Music Festival</h3>
-            <p className="text-purple-100 mb-3">Join us for three days of amazing music and food!</p>
-            <button className="bg-white text-purple-600 px-4 py-2 rounded-lg font-medium hover:bg-purple-50 transition-colors">
-              Get Tickets
-            </button>
+        {!showItinerary && (
+          <div className="bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl p-6 relative overflow-hidden">
+            <div className="relative z-10">
+              <h3 className="text-lg font-bold mb-2">Summer Music Festival</h3>
+              <p className="text-purple-100 mb-3">Join us for three days of amazing music and food!</p>
+              <div className="flex space-x-2">
+                <button className="bg-white text-purple-600 px-4 py-2 rounded-lg font-medium hover:bg-purple-50 transition-colors">
+                  Get Tickets
+                </button>
+                {user && (
+                  <button 
+                    onClick={() => setShowItinerary(true)}
+                    className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                  >
+                    Add to Itinerary
+                  </button>
+                )}
+              </div>
+            </div>
+            <div className="absolute -right-4 -top-4 w-24 h-24 bg-white/10 rounded-full"></div>
+            <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-white/5 rounded-full"></div>
           </div>
-          <div className="absolute -right-4 -top-4 w-24 h-24 bg-white/10 rounded-full"></div>
-          <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-white/5 rounded-full"></div>
-        </div>
+        )}
       </div>
     </div>
   );
