@@ -2,7 +2,6 @@
   "name": "@cozumel/admin",
   "version": "1.0.0",
   "private": true,
-  "description": "Admin dashboard for managing Cozumel mobile apps and business verifications",
   "scripts": {
     "dev": "next dev --port 3001",
     "build": "next build",
@@ -32,13 +31,5 @@
     "postcss": "^8.4.32",
     "tailwindcss": "^3.4.0",
     "typescript": "^5.3.3"
-  },
-  "keywords": [
-    "admin",
-    "dashboard",
-    "mobile-app-management",
-    "business-verification",
-    "cozumel",
-    "marketplace"
-  ]
+  }
 }

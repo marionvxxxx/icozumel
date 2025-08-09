@@ -1,22 +1,102 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { NativeBaseProvider } from 'native-base';
+import { NativeBaseProvider, extendTheme } from 'native-base';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import { Platform } from 'react-native';
+import { Platform, View, Text } from 'react-native';
 
-// Screens
-import MapScreen from './src/screens/MapScreen';
-import ExploreScreen from './src/screens/ExploreScreen';
-import BookingsScreen from './src/screens/BookingsScreen';
-import ProfileScreen from './src/screens/ProfileScreen';
+// Simple theme
+const theme = extendTheme({
+  colors: {
+    primary: {
+      50: '#f0fdfa',
+      500: '#14b8a6',
+      600: '#0d9488',
+    },
+  },
+});
 
-// Theme
-import { theme } from './src/theme';
-import { WebPreviewBanner } from './src/components/WebPreviewBanner';
+// Simple screens for preview
+function MapScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#f0fdfa' }}>
+      <Text style={{ fontSize: 48, marginBottom: 16 }}>🗺️</Text>
+      <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#0d9488', marginBottom: 8 }}>
+        Mapa de Cozumel
+      </Text>
+      <Text style={{ fontSize: 16, color: '#666', textAlign: 'center', paddingHorizontal: 20 }}>
+        {Platform.OS === 'web' 
+          ? 'Vista previa web - Funciona completamente en móvil' 
+          : 'Encuentra negocios cerca de ti'}
+      </Text>
+    </View>
+  );
+}
+
+function ExploreScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff' }}>
+      <Text style={{ fontSize: 48, marginBottom: 16 }}>🔍</Text>
+      <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#0d9488', marginBottom: 8 }}>
+        Explorar
+      </Text>
+      <Text style={{ fontSize: 16, color: '#666', textAlign: 'center', paddingHorizontal: 20 }}>
+        Descubre restaurantes, actividades y más
+      </Text>
+    </View>
+  );
+}
+
+function BookingsScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff' }}>
+      <Text style={{ fontSize: 48, marginBottom: 16 }}>📅</Text>
+      <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#0d9488', marginBottom: 8 }}>
+        Mis Reservas
+      </Text>
+      <Text style={{ fontSize: 16, color: '#666', textAlign: 'center', paddingHorizontal: 20 }}>
+        Gestiona tus reservas y citas
+      </Text>
+    </View>
+  );
+}
+
+function ProfileScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff' }}>
+      <Text style={{ fontSize: 48, marginBottom: 16 }}>👤</Text>
+      <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#0d9488', marginBottom: 8 }}>
+        Mi Perfil
+      </Text>
+      <Text style={{ fontSize: 16, color: '#666', textAlign: 'center', paddingHorizontal: 20 }}>
+        Configuración y preferencias
+      </Text>
+    </View>
+  );
+}
 
 const Tab = createBottomTabNavigator();
+
+// Web preview banner
+function WebPreviewBanner() {
+  if (Platform.OS !== 'web') return null;
+  
+  return (
+    <View style={{ 
+      backgroundColor: '#3b82f6', 
+      paddingVertical: 8, 
+      paddingHorizontal: 16,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }}>
+      <Text style={{ color: 'white', fontSize: 14, fontWeight: '500' }}>
+        📱 Vista Previa Web - Descarga la app móvil para la experiencia completa
+      </Text>
+    </View>
+  );
+}
 
 export default function App() {
   return (

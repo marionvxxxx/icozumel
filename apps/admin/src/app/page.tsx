@@ -1,9 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@cozumel/ui';
-import { Smartphone, Users, CheckCircle, AlertTriangle, TrendingUp, Download } from 'lucide-react';
-import { MobileAppStats } from '@/components/dashboard/mobile-app-stats';
-import { VerificationQueue } from '@/components/verification/verification-queue';
-import { RecentActivity } from '@/components/dashboard/recent-activity';
-
 export default function AdminDashboard() {
   return (
     <div className="space-y-6">
@@ -15,120 +9,212 @@ export default function AdminDashboard() {
 
       {/* Mobile App Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">iOS Downloads</CardTitle>
-            <Smartphone className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">12,543</div>
-            <p className="text-xs text-muted-foreground">+15% from last month</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Android Downloads</CardTitle>
-            <Smartphone className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">18,721</div>
-            <p className="text-xs text-muted-foreground">+22% from last month</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Users</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">8,456</div>
-            <p className="text-xs text-muted-foreground">+8% from last week</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Pending Verifications</CardTitle>
-            <AlertTriangle className="h-4 w-4 text-yellow-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">23</div>
-            <p className="text-xs text-muted-foreground">Requires attention</p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Mobile App Statistics */}
-        <div className="lg:col-span-2">
-          <MobileAppStats />
+        <div className="bg-white rounded-lg border shadow-sm p-6">
+          <div className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <h3 className="text-sm font-medium">iOS Downloads</h3>
+            <span className="text-2xl">📱</span>
+          </div>
+          <div className="text-2xl font-bold">12,543</div>
+          <p className="text-xs text-gray-600">+15% from last month</p>
         </div>
 
-        {/* Recent Activity */}
-        <div>
-          <RecentActivity />
+        <div className="bg-white rounded-lg border shadow-sm p-6">
+          <div className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <h3 className="text-sm font-medium">Android Downloads</h3>
+            <span className="text-2xl">🤖</span>
+          </div>
+          <div className="text-2xl font-bold">18,721</div>
+          <p className="text-xs text-gray-600">+22% from last month</p>
+        </div>
+
+        <div className="bg-white rounded-lg border shadow-sm p-6">
+          <div className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <h3 className="text-sm font-medium">Active Users</h3>
+            <span className="text-2xl">👥</span>
+          </div>
+          <div className="text-2xl font-bold">8,456</div>
+          <p className="text-xs text-gray-600">+8% from last week</p>
+        </div>
+
+        <div className="bg-white rounded-lg border shadow-sm p-6">
+          <div className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <h3 className="text-sm font-medium">Pending Verifications</h3>
+            <span className="text-2xl">⚠️</span>
+          </div>
+          <div className="text-2xl font-bold">23</div>
+          <p className="text-xs text-gray-600">Requires attention</p>
         </div>
       </div>
 
-      {/* Verification Queue */}
-      <div>
-        <VerificationQueue />
+      {/* Mobile App Statistics */}
+      <div className="bg-white rounded-lg border shadow-sm">
+        <div className="p-6 border-b">
+          <h3 className="text-lg font-semibold flex items-center space-x-2">
+            <span>📊</span>
+            <span>Mobile App Statistics</span>
+          </h3>
+        </div>
+        <div className="p-6">
+          <div className="grid grid-cols-2 gap-6">
+            {/* iOS Stats */}
+            <div className="space-y-4">
+              <h4 className="font-semibold text-lg flex items-center space-x-2">
+                <span>🍎</span>
+                <span>iOS App</span>
+              </h4>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">Total Downloads</span>
+                  <span className="font-semibold">12,543</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">Active Users</span>
+                  <span className="font-semibold">4,231</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">App Store Rating</span>
+                  <span className="font-semibold text-mobile-600">4.8 ⭐</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">Version</span>
+                  <span className="font-semibold">1.2.3</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Android Stats */}
+            <div className="space-y-4">
+              <h4 className="font-semibold text-lg flex items-center space-x-2">
+                <span>🤖</span>
+                <span>Android App</span>
+              </h4>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">Total Downloads</span>
+                  <span className="font-semibold">18,721</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">Active Users</span>
+                  <span className="font-semibold">6,892</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">Play Store Rating</span>
+                  <span className="font-semibold text-green-600">4.7 ⭐</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">Version</span>
+                  <span className="font-semibold">1.2.3</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Combined Stats */}
+          <div className="mt-6 pt-6 border-t">
+            <div className="grid grid-cols-3 gap-4">
+              <div className="text-center">
+                <div className="text-2xl mb-2">📥</div>
+                <div className="text-2xl font-bold">31,264</div>
+                <div className="text-sm text-gray-600">Total Downloads</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl mb-2">👥</div>
+                <div className="text-2xl font-bold">11,123</div>
+                <div className="text-sm text-gray-600">Active Users</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl mb-2">📈</div>
+                <div className="text-2xl font-bold text-green-600">+18%</div>
+                <div className="text-sm text-gray-600">Growth Rate</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Additional Stats */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              <TrendingUp className="h-5 w-5" />
-              <span>App Performance</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <span className="text-sm font-medium">iOS App Rating</span>
-                <span className="text-2xl font-bold text-mobile-600">4.8</span>
+      {/* Business Verification Queue */}
+      <div className="bg-white rounded-lg border shadow-sm">
+        <div className="p-6 border-b">
+          <h3 className="text-lg font-semibold flex items-center space-x-2">
+            <span>✅</span>
+            <span>Business Verification Queue</span>
+            <span className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full">3</span>
+          </h3>
+        </div>
+        <div className="p-6">
+          <div className="space-y-4">
+            {[
+              {
+                name: 'Restaurant El Moro',
+                owner: 'Carlos Rodriguez',
+                platform: 'iOS',
+                status: 'pending',
+                risk: 'low'
+              },
+              {
+                name: 'Dive Shop Paradise',
+                owner: 'Sarah Johnson',
+                platform: 'Android',
+                status: 'review',
+                risk: 'medium'
+              },
+              {
+                name: 'Beach Club Sunset',
+                owner: 'Miguel Hernandez',
+                platform: 'iOS',
+                status: 'pending',
+                risk: 'low'
+              }
+            ].map((business, index) => (
+              <div key={index} className="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                <div className="flex items-center justify-between mb-3">
+                  <div>
+                    <h4 className="font-semibold text-lg">{business.name}</h4>
+                    <p className="text-sm text-gray-600 flex items-center space-x-2">
+                      <span>{business.owner}</span>
+                      <span>•</span>
+                      <span className={business.platform === 'iOS' ? 'text-blue-600' : 'text-green-600'}>
+                        {business.platform === 'iOS' ? '🍎' : '🤖'} {business.platform}
+                      </span>
+                    </p>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      business.status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 'bg-orange-100 text-orange-800'
+                    }`}>
+                      {business.status.toUpperCase()}
+                    </span>
+                    <span className={`text-sm font-medium ${
+                      business.risk === 'low' ? 'text-green-600' : 'text-yellow-600'
+                    }`}>
+                      {business.risk === 'low' ? '🟢' : '🟡'} {business.risk} risk
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-wrap gap-1">
+                    {['RFC', 'INE', 'Proof of Address'].map((doc) => (
+                      <span key={doc} className="border border-gray-200 text-gray-600 text-xs px-2 py-1 rounded">
+                        {doc}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <button className="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-gray-50">
+                      👁️ Review
+                    </button>
+                    <button className="px-3 py-1 text-sm border border-green-300 text-green-600 rounded hover:bg-green-50">
+                      ✅ Approve
+                    </button>
+                    <button className="px-3 py-1 text-sm border border-red-300 text-red-600 rounded hover:bg-red-50">
+                      ❌ Reject
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm font-medium">Android App Rating</span>
-                <span className="text-2xl font-bold text-mobile-600">4.7</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm font-medium">Crash-free Sessions</span>
-                <span className="text-2xl font-bold text-green-600">99.2%</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              <Download className="h-5 w-5" />
-              <span>Download Trends</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <span className="text-sm font-medium">This Week</span>
-                <span className="text-2xl font-bold">1,234</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm font-medium">This Month</span>
-                <span className="text-2xl font-bold">5,678</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm font-medium">Growth Rate</span>
-                <span className="text-2xl font-bold text-green-600">+18%</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
