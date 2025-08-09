@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star, MapPin, Clock, Verified, Crown } from 'lucide-react';
+import { Star, MapPin, Clock, Verified, Crown, Sparkles, Zap } from 'lucide-react';
 import { Business } from '../../types';
 
 interface BusinessCardProps {
@@ -16,10 +16,10 @@ const BusinessCard: React.FC<BusinessCardProps> = ({ business, onClick, compact 
         size={12}
         className={`${
           i < Math.floor(rating)
-            ? 'text-yellow-400 fill-current'
+            ? 'text-yellow-400 fill-current animate-pulse'
             : i < rating
-            ? 'text-yellow-400 fill-current opacity-50'
-            : 'text-gray-300'
+            ? 'text-yellow-400 fill-current opacity-50 animate-pulse'
+            : 'text-white/30'
         }`}
       />
     ));
@@ -28,25 +28,25 @@ const BusinessCard: React.FC<BusinessCardProps> = ({ business, onClick, compact 
   if (compact) {
     return (
       <div 
-        className="bg-white rounded-lg shadow-sm border border-gray-200 p-3 cursor-pointer hover:shadow-md transition-shadow"
+        className="card p-3 cursor-pointer glow-on-hover animate-slide-up"
         onClick={onClick}
       >
         <div className="flex space-x-3">
           <img
             src={business.images[0]}
             alt={business.name}
-            className="w-16 h-16 rounded-lg object-cover"
+            className="w-16 h-16 rounded-xl object-cover border border-white/20 shadow-lg"
           />
           <div className="flex-1 min-w-0">
             <div className="flex items-center space-x-2 mb-1">
-              <h3 className="font-semibold text-gray-900 truncate">{business.name}</h3>
-              {business.isVerified && <Verified size={14} className="text-blue-500" />}
-              {business.isFeatured && <Crown size={14} className="text-yellow-500" />}
+              <h3 className="font-semibold text-white truncate">{business.name}</h3>
+              {business.isVerified && <Verified size={14} className="text-primary-400 animate-pulse" />}
+              {business.isFeatured && <Crown size={14} className="text-yellow-400 animate-bounce-subtle" />}
             </div>
-            <p className="text-sm text-gray-600 mb-2">{business.category}</p>
+            <p className="text-sm text-white/60 mb-2">{business.category}</p>
             <div className="flex items-center space-x-1">
               {renderStars(business.rating)}
-              <span className="text-sm text-gray-600 ml-1">
+              <span className="text-sm text-white/60 ml-1">
                 {business.rating} ({business.reviewCount})
               </span>
             </div>
@@ -58,49 +58,61 @@ const BusinessCard: React.FC<BusinessCardProps> = ({ business, onClick, compact 
 
   return (
     <div 
-      className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow"
+      className="card overflow-hidden cursor-pointer animate-fade-in group"
       onClick={onClick}
     >
       <div className="relative">
         <img
           src={business.images[0]}
           alt={business.name}
-          className="w-full h-48 object-cover"
+          className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
         {business.isFeatured && (
-          <div className="absolute top-3 left-3 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-2 py-1 rounded-full flex items-center space-x-1">
-            <Crown size={12} />
-            <span className="text-xs font-medium">Featured</span>
+          <div className="absolute top-3 left-3 status-premium flex items-center space-x-1">
+            <Crown size={12} className="animate-bounce-subtle" />
+            <span className="text-xs font-bold">Featured</span>
           </div>
         )}
+        <div className="absolute top-3 right-3 glass rounded-full p-2">
+          <Sparkles size={16} className="text-white animate-pulse" />
+        </div>
       </div>
       
       <div className="p-4">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center space-x-2">
-            <h3 className="font-semibold text-gray-900">{business.name}</h3>
-            {business.isVerified && <Verified size={16} className="text-blue-500" />}
+            <h3 className="font-semibold text-white font-display">{business.name}</h3>
+            {business.isVerified && <Verified size={16} className="text-primary-400 animate-pulse" />}
           </div>
-          <span className="text-sm text-gray-500">{business.category}</span>
+          <span className="text-sm text-white/60 bg-white/10 px-2 py-1 rounded-full">
+            {business.category}
+          </span>
         </div>
         
-        <p className="text-gray-600 text-sm mb-3 line-clamp-2">{business.description}</p>
+        <p className="text-white/70 text-sm mb-3 line-clamp-2">{business.description}</p>
         
         <div className="flex items-center space-x-1 mb-2">
           {renderStars(business.rating)}
-          <span className="text-sm text-gray-600 ml-1">
+          <span className="text-sm text-white/60 ml-1">
             {business.rating} ({business.reviewCount} reviews)
           </span>
         </div>
         
-        <div className="flex items-center text-sm text-gray-500 mb-2">
-          <MapPin size={14} className="mr-1" />
+        <div className="flex items-center text-sm text-white/60 mb-2">
+          <MapPin size={14} className="mr-1 text-primary-400" />
           <span className="truncate">{business.address}</span>
         </div>
         
-        <div className="flex items-center text-sm text-gray-500">
-          <Clock size={14} className="mr-1" />
-          <span>Open until 6:00 PM</span>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center text-sm text-white/60">
+            <Clock size={14} className="mr-1 text-green-400" />
+            <span>Open until 6:00 PM</span>
+          </div>
+          <button className="btn-ghost text-xs px-3 py-1 flex items-center space-x-1">
+            <Zap size={12} />
+            <span>Quick View</span>
+          </button>
         </div>
       </div>
     </div>

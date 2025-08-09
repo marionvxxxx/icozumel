@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Search, Calendar, User, Building2 } from 'lucide-react';
+import { Home, Search, Calendar, User, Building2, Sparkles } from 'lucide-react';
 import { isMobile } from '../../utils/responsive';
 
 interface BottomNavigationProps {
@@ -20,7 +20,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({ activeTab, onTabCha
   return (
     <div className={`
       ${mobile ? 'fixed bottom-0 left-0 right-0' : 'hidden'} 
-      bg-white border-t border-gray-200 px-4 py-2 z-50
+      glass-dark border-t border-white/10 px-4 py-2 z-50 backdrop-blur-xl
     `}>
       <div className="flex justify-around items-center max-w-md mx-auto">
         {tabs.map((tab) => {
@@ -31,14 +31,21 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({ activeTab, onTabCha
             <button
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
-              className={`flex flex-col items-center py-2 px-2 rounded-lg transition-colors duration-200 ${
+              className={`nav-item ${
                 isActive
-                  ? 'text-primary-600 bg-primary-50'
-                  : 'text-gray-500 hover:text-gray-700'
+                  ? 'active text-white'
+                  : 'text-white/60 hover:text-white'
               }`}
             >
-              <Icon size={mobile ? 20 : 24} className="mb-1" />
-              <span className={`${mobile ? 'text-xs' : 'text-sm'} font-medium`}>{tab.label}</span>
+              <Icon size={mobile ? 20 : 24} className={`mb-1 ${isActive ? 'animate-bounce-subtle' : ''}`} />
+              <span className={`${mobile ? 'text-xs' : 'text-sm'} font-medium`}>
+                {tab.label}
+              </span>
+              {isActive && (
+                <div className="absolute -top-1 left-1/2 transform -translate-x-1/2">
+                  <Sparkles size={8} className="text-primary-400 animate-pulse" />
+                </div>
+              )}
             </button>
           );
         })}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
+import { X, Mail, Lock, User, Eye, EyeOff, Sparkles, Zap } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 
 interface AuthModalProps {
@@ -46,15 +46,22 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-xl max-w-md w-full p-6">
+    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in">
+      <div className="glass-dark rounded-2xl max-w-md w-full p-6 border border-white/20 shadow-glow-lg animate-scale-in relative overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute -top-10 -right-10 w-20 h-20 bg-primary-500/20 rounded-full blur-xl animate-float"></div>
+        <div className="absolute -bottom-10 -left-10 w-20 h-20 bg-secondary-500/20 rounded-full blur-xl animate-float" style={{ animationDelay: '2s' }}></div>
+        
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">
-            {mode === 'login' ? 'Welcome Back' : 'Join LocalVibe'}
-          </h2>
+          <div className="flex items-center space-x-2">
+            <Sparkles className="text-primary-400 animate-pulse" size={24} />
+            <h2 className="text-2xl font-bold text-white font-display">
+              {mode === 'login' ? 'Welcome Back' : 'Join LocalVibe'}
+            </h2>
+          </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
+            className="text-white/60 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg"
           >
             <X size={24} />
           </button>
@@ -63,11 +70,11 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
         <form onSubmit={handleSubmit} className="space-y-4">
           {mode === 'register' && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-white/80 mb-2">
                 Full Name
               </label>
               <div className="relative">
-                <User size={18} className="absolute left-3 top-3 text-gray-400" />
+                <User size={18} className="absolute left-3 top-3 text-white/60" />
                 <input
                   type="text"
                   name="name"
@@ -82,11 +89,11 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
           )}
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-white/80 mb-2">
               Email Address
             </label>
             <div className="relative">
-              <Mail size={18} className="absolute left-3 top-3 text-gray-400" />
+              <Mail size={18} className="absolute left-3 top-3 text-white/60" />
               <input
                 type="email"
                 name="email"
@@ -100,11 +107,11 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-white/80 mb-2">
               Password
             </label>
             <div className="relative">
-              <Lock size={18} className="absolute left-3 top-3 text-gray-400" />
+              <Lock size={18} className="absolute left-3 top-3 text-white/60" />
               <input
                 type={showPassword ? 'text' : 'password'}
                 name="password"
@@ -117,7 +124,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-3 text-white/60 hover:text-white transition-colors"
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
@@ -125,24 +132,27 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
           </div>
 
           {errors.general && (
-            <div className="text-red-600 text-sm">{errors.general}</div>
+            <div className="text-red-400 text-sm bg-red-500/10 p-3 rounded-lg border border-red-500/20">
+              {errors.general}
+            </div>
           )}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
           >
-            {loading ? 'Please wait...' : mode === 'login' ? 'Sign In' : 'Create Account'}
+            {loading && <Zap size={16} className="animate-pulse" />}
+            <span>{loading ? 'Please wait...' : mode === 'login' ? 'Sign In' : 'Create Account'}</span>
           </button>
         </form>
 
         <div className="mt-6 text-center">
-          <p className="text-gray-600">
+          <p className="text-white/70">
             {mode === 'login' ? "Don't have an account?" : 'Already have an account?'}
             <button
               onClick={() => setMode(mode === 'login' ? 'register' : 'login')}
-              className="ml-1 text-primary-600 hover:text-primary-700 font-medium"
+              className="ml-1 text-primary-400 hover:text-primary-300 font-medium transition-colors"
             >
               {mode === 'login' ? 'Sign up' : 'Sign in'}
             </button>
@@ -150,7 +160,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
         </div>
 
         <div className="mt-4 text-center">
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-white/50">
             By continuing, you agree to our Terms of Service and Privacy Policy
           </p>
         </div>
