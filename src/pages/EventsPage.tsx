@@ -69,12 +69,12 @@ const EventsPage: React.FC = () => {
         </div>
 
         {/* Quick Date Navigation */}
-        <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
+        <div className="card">
           <div className="flex items-center space-x-3 overflow-x-auto">
             {['Today', 'Tomorrow', 'This Week', 'This Month'].map((period) => (
               <button
                 key={period}
-                className="flex-shrink-0 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium"
+                className="flex-shrink-0 px-4 py-2 glass text-white/80 rounded-lg hover:bg-white/20 transition-colors text-sm font-medium"
               >
                 {period}
               </button>
@@ -86,7 +86,7 @@ const EventsPage: React.FC = () => {
         <div className="flex items-center space-x-3">
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center space-x-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            className="flex items-center space-x-2 px-4 py-2 glass border border-white/20 rounded-lg hover:bg-white/20 transition-colors text-white"
           >
             <Filter size={16} />
             <span className="text-sm font-medium">Filter</span>
@@ -101,7 +101,7 @@ const EventsPage: React.FC = () => {
                   className={`flex-shrink-0 px-3 py-1 rounded-full text-sm font-medium transition-colors ${
                     selectedFilter === category
                       ? 'bg-primary-600 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      : 'glass text-white/80 hover:bg-white/20'
                   }`}
                 >
                   {category}
@@ -112,16 +112,16 @@ const EventsPage: React.FC = () => {
         </div>
 
         {showFilters && (
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
-            <h3 className="font-semibold text-gray-900 mb-3">Advanced Filters</h3>
+          <div className="card">
+            <h3 className="font-semibold text-white mb-3">Advanced Filters</h3>
             <div className="space-y-3">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Price Range</label>
+                <label className="block text-sm font-medium text-white/80 mb-2">Price Range</label>
                 <div className="flex space-x-2">
                   {['Free', '$1-25', '$26-50', '$50+'].map((price) => (
                     <button
                       key={price}
-                      className="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm"
+                      className="px-3 py-1 glass text-white/80 rounded-lg hover:bg-white/20 transition-colors text-sm"
                     >
                       {price}
                     </button>
@@ -130,7 +130,7 @@ const EventsPage: React.FC = () => {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Distance</label>
+                <label className="block text-sm font-medium text-white/80 mb-2">Distance</label>
                 <select className="input-field">
                   <option>Within 1 mile</option>
                   <option>Within 5 miles</option>
@@ -145,7 +145,7 @@ const EventsPage: React.FC = () => {
         {/* Events List */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold text-gray-900">
+            <h2 className="text-lg font-bold text-white">
               Upcoming Events ({upcomingEvents.length})
             </h2>
             <button className="text-primary-600 text-sm font-medium">View Calendar</button>
@@ -163,11 +163,11 @@ const EventsPage: React.FC = () => {
             </div>
           ) : (
             <div className="text-center py-12">
-              <div className="text-gray-400 mb-2">
+              <div className="text-white/40 mb-2">
                 <Calendar size={48} className="mx-auto" />
               </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No events found</h3>
-              <p className="text-gray-500 mb-4">Try adjusting your filters or check back later</p>
+              <h3 className="text-lg font-medium text-white mb-2">No events found</h3>
+              <p className="text-white/60 mb-4">Try adjusting your filters or check back later</p>
               <button className="btn-primary">Create an Event</button>
             </div>
           )}

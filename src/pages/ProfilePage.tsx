@@ -76,8 +76,8 @@ const ProfilePage: React.FC = () => {
         />
 
         {/* Badges */}
-        <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
-          <h3 className="font-semibold text-gray-900 mb-3 flex items-center">
+        <div className="card">
+          <h3 className="font-semibold text-white mb-3 flex items-center">
             <Award className="mr-2 text-yellow-500" size={20} />
             Your Badges
           </h3>
@@ -110,7 +110,7 @@ const ProfilePage: React.FC = () => {
         )}
 
         {/* Tab Navigation */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div className="card overflow-hidden">
           <div className="flex">
             {[
               { id: 'profile', label: 'Profile' },
@@ -123,7 +123,7 @@ const ProfilePage: React.FC = () => {
                 className={`flex-1 py-3 px-4 text-sm font-medium transition-colors ${
                   activeTab === tab.id
                     ? 'bg-primary-50 text-primary-600 border-b-2 border-primary-600'
-                    : 'text-gray-600 hover:text-gray-900'
+                    : 'text-white/70 hover:text-white'
                 }`}
               >
                 {tab.label}
@@ -135,13 +135,13 @@ const ProfilePage: React.FC = () => {
         {/* Profile Tab */}
         {activeTab === 'profile' && (
           <div className="space-y-4">
-            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
-              <h3 className="font-semibold text-gray-900 mb-3">Interests</h3>
+            <div className="card">
+              <h3 className="font-semibold text-white mb-3">Interests</h3>
               <div className="flex flex-wrap gap-2">
                 {user.interests.map((interest, index) => (
                   <span
                     key={index}
-                    className="bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-sm"
+                    className="glass text-white/80 px-3 py-1 rounded-full text-sm"
                   >
                     {interest}
                   </span>
@@ -149,8 +149,8 @@ const ProfilePage: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
-              <h3 className="font-semibold text-gray-900 mb-3">Recent Reviews</h3>
+            <div className="card">
+              <h3 className="font-semibold text-white mb-3">Recent Reviews</h3>
               <div className="space-y-3">
                 <div className="border-l-4 border-primary-500 pl-3">
                   <div className="flex items-center space-x-1 mb-1">
@@ -158,18 +158,18 @@ const ProfilePage: React.FC = () => {
                       <Star key={i} size={12} className="text-yellow-400 fill-current" />
                     ))}
                   </div>
-                  <p className="text-sm text-gray-900 mb-1">Amazing coffee and atmosphere!</p>
-                  <p className="text-xs text-gray-500">Coastal Café • 2 days ago</p>
+                  <p className="text-sm text-white mb-1">Amazing coffee and atmosphere!</p>
+                  <p className="text-xs text-white/60">Coastal Café • 2 days ago</p>
                 </div>
                 <div className="border-l-4 border-secondary-500 pl-3">
                   <div className="flex items-center space-x-1 mb-1">
                     {Array.from({ length: 4 }, (_, i) => (
                       <Star key={i} size={12} className="text-yellow-400 fill-current" />
                     ))}
-                    <Star size={12} className="text-gray-300" />
+                    <Star size={12} className="text-white/30" />
                   </div>
-                  <p className="text-sm text-gray-900 mb-1">Great selection of outdoor gear!</p>
-                  <p className="text-xs text-gray-500">Adventure Gear Co. • 1 week ago</p>
+                  <p className="text-sm text-white mb-1">Great selection of outdoor gear!</p>
+                  <p className="text-xs text-white/60">Adventure Gear Co. • 1 week ago</p>
                 </div>
               </div>
               <button
@@ -181,16 +181,16 @@ const ProfilePage: React.FC = () => {
             </div>
 
             {/* Stats */}
-            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
-              <h3 className="font-semibold text-gray-900 mb-3">Your Impact</h3>
+            <div className="card">
+              <h3 className="font-semibold text-white mb-3">Your Impact</h3>
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center">
                   <div className="text-2xl font-bold text-primary-600">12</div>
-                  <div className="text-sm text-gray-600">Reviews Written</div>
+                  <div className="text-sm text-white/70">Reviews Written</div>
                 </div>
                 <div className="text-center">
                   <div className="text-2xl font-bold text-secondary-600">847</div>
-                  <div className="text-sm text-gray-600">People Helped</div>
+                  <div className="text-sm text-white/70">People Helped</div>
                 </div>
               </div>
             </div>
@@ -200,25 +200,25 @@ const ProfilePage: React.FC = () => {
         {/* Activity Tab */}
         {activeTab === 'activity' && (
           <div className="space-y-4">
-            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
-              <h3 className="font-semibold text-gray-900 mb-3">Recent Activity</h3>
+            <div className="card">
+              <h3 className="font-semibold text-white mb-3">Recent Activity</h3>
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center">
                     <Star size={14} className="text-green-600" />
                   </div>
                   <div className="flex-1">
-                    <div className="text-sm text-gray-900">Left a review for Coastal Café</div>
-                    <div className="text-xs text-gray-500">2 days ago</div>
+                    <div className="text-sm text-white">Left a review for Coastal Café</div>
+                    <div className="text-xs text-white/60">2 days ago</div>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center">
                     <MapPin size={14} className="text-blue-600" />
                   </div>
                   <div className="flex-1">
-                    <div className="text-sm text-gray-900">Checked in at Adventure Gear Co.</div>
-                    <div className="text-xs text-gray-500">1 week ago</div>
+                    <div className="text-sm text-white">Checked in at Adventure Gear Co.</div>
+                    <div className="text-xs text-white/60">1 week ago</div>
                   </div>
                 </div>
               </div>
@@ -229,33 +229,33 @@ const ProfilePage: React.FC = () => {
         {/* Settings Tab */}
         {activeTab === 'settings' && (
           <div className="space-y-4">
-            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
-              <h3 className="font-semibold text-gray-900 mb-3">Account Settings</h3>
+            <div className="card">
+              <h3 className="font-semibold text-white mb-3">Account Settings</h3>
               <div className="space-y-3">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                  <label className="block text-sm font-medium text-white/80 mb-1">Full Name</label>
                   <input type="text" className="input-field" defaultValue={user.name} />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                  <label className="block text-sm font-medium text-white/80 mb-1">Email</label>
                   <input type="email" className="input-field" defaultValue={user.email} />
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
-              <h3 className="font-semibold text-gray-900 mb-3">Notifications</h3>
+            <div className="card">
+              <h3 className="font-semibold text-white mb-3">Notifications</h3>
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-900">Push Notifications</span>
+                  <span className="text-sm text-white">Push Notifications</span>
                   <input type="checkbox" className="rounded" defaultChecked />
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-900">Email Updates</span>
+                  <span className="text-sm text-white">Email Updates</span>
                   <input type="checkbox" className="rounded" defaultChecked />
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-900">Event Reminders</span>
+                  <span className="text-sm text-white">Event Reminders</span>
                   <input type="checkbox" className="rounded" />
                 </div>
               </div>
@@ -263,7 +263,7 @@ const ProfilePage: React.FC = () => {
 
             <button
               onClick={logout}
-              className="w-full flex items-center justify-center space-x-2 bg-red-50 text-red-600 py-3 px-4 rounded-lg hover:bg-red-100 transition-colors"
+              className="w-full flex items-center justify-center space-x-2 glass text-red-400 py-3 px-4 rounded-lg hover:bg-white/10 transition-colors"
             >
               <LogOut size={18} />
               <span>Sign Out</span>

@@ -45,7 +45,7 @@ const DiscoverPage: React.FC = () => {
         <div className="flex justify-end">
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center space-x-2 px-3 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            className="flex items-center space-x-2 px-3 py-2 glass border border-white/20 rounded-lg hover:bg-white/20 transition-colors text-white"
           >
             <Filter size={16} />
             <span className="text-sm font-medium">Filters</span>
@@ -54,19 +54,19 @@ const DiscoverPage: React.FC = () => {
 
         {/* Filters */}
         {showFilters && (
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
+          <div className="card">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="font-semibold text-gray-900">Filters</h3>
+              <h3 className="font-semibold text-white">Filters</h3>
               <div className="flex items-center space-x-2">
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={`p-2 rounded-lg ${viewMode === 'grid' ? 'bg-primary-100 text-primary-600' : 'text-gray-400'}`}
+                  className={`p-2 rounded-lg ${viewMode === 'grid' ? 'bg-primary-500/20 text-primary-400' : 'text-white/60'}`}
                 >
                   <Grid size={16} />
                 </button>
                 <button
                   onClick={() => setViewMode('list')}
-                  className={`p-2 rounded-lg ${viewMode === 'list' ? 'bg-primary-100 text-primary-600' : 'text-gray-400'}`}
+                  className={`p-2 rounded-lg ${viewMode === 'list' ? 'bg-primary-500/20 text-primary-400' : 'text-white/60'}`}
                 >
                   <List size={16} />
                 </button>
@@ -75,7 +75,7 @@ const DiscoverPage: React.FC = () => {
             
             <div className="space-y-3">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                <label className="block text-sm font-medium text-white/80 mb-2">Category</label>
                 <div className="flex flex-wrap gap-2">
                   {categories.map((category) => (
                     <button
@@ -84,7 +84,7 @@ const DiscoverPage: React.FC = () => {
                       className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
                         selectedCategory === category
                           ? 'bg-primary-600 text-white'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                          : 'glass text-white/80 hover:bg-white/20'
                       }`}
                     >
                       {category}
@@ -94,7 +94,7 @@ const DiscoverPage: React.FC = () => {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Distance</label>
+                <label className="block text-sm font-medium text-white/80 mb-2">Distance</label>
                 <select className="input-field">
                   <option>Within 1 mile</option>
                   <option>Within 5 miles</option>
@@ -107,11 +107,11 @@ const DiscoverPage: React.FC = () => {
         )}
 
         {/* Location Banner */}
-        <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 flex items-center space-x-3">
+        <div className="card flex items-center space-x-3">
           <MapPin className="text-primary-600" size={20} />
           <div>
-            <div className="font-medium text-gray-900">Seaside Town, CA</div>
-            <div className="text-sm text-gray-500">Showing results within 5 miles</div>
+            <div className="font-medium text-white">Seaside Town, CA</div>
+            <div className="text-sm text-white/60">Showing results within 5 miles</div>
           </div>
         </div>
 
@@ -119,14 +119,14 @@ const DiscoverPage: React.FC = () => {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold text-gray-900">
+              <h2 className="text-lg font-bold text-white">
                 {isLoading ? 'Searching...' : `${filteredBusinesses.length} Results`}
               </h2>
               {searchQuery && (
-                <p className="text-sm text-gray-600">for "{searchQuery}"</p>
+                <p className="text-sm text-white/70">for "{searchQuery}"</p>
               )}
             </div>
-            <select className="text-sm border border-gray-300 rounded-lg px-3 py-1">
+            <select className="text-sm glass border border-white/20 rounded-lg px-3 py-1 text-white">
               <option>Sort by Relevance</option>
               <option>Sort by Rating</option>
               <option>Sort by Distance</option>
@@ -153,24 +153,24 @@ const DiscoverPage: React.FC = () => {
 
           {filteredBusinesses.length === 0 && (
             <div className="text-center py-12">
-              <div className="text-gray-400 mb-2">
+              <div className="text-white/40 mb-2">
                 <Search size={48} className="mx-auto" />
               </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No results found</h3>
-              <p className="text-gray-500">Try adjusting your search or filters</p>
+              <h3 className="text-lg font-medium text-white mb-2">No results found</h3>
+              <p className="text-white/60">Try adjusting your search or filters</p>
             </div>
           )}
         </div>
 
         {/* Quick Filters */}
-        <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
-          <h3 className="font-semibold text-gray-900 mb-3">Popular Searches</h3>
+        <div className="card">
+          <h3 className="font-semibold text-white mb-3">Popular Searches</h3>
           <div className="flex flex-wrap gap-2">
             {['Coffee shops', 'Italian food', 'Art galleries', 'Live music', 'Shopping'].map((term) => (
               <button
                 key={term}
                 onClick={() => handleSearch(term)}
-                className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition-colors"
+                className="px-3 py-1 glass text-white/80 rounded-full text-sm hover:bg-white/20 transition-colors"
               >
                 {term}
               </button>

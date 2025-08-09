@@ -38,7 +38,7 @@ const NotificationBanner: React.FC<NotificationBannerProps> = ({
       case 'update':
         return 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white';
       default:
-        return 'bg-gray-100 text-gray-900';
+        return 'glass-dark text-white';
     }
   };
 

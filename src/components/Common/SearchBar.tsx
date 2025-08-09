@@ -57,19 +57,19 @@ const SearchBar: React.FC<SearchBarProps> = ({
 
       {/* Recent Searches Dropdown */}
       {isFocused && showRecentSearches && (
-        <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 z-50">
+        <div className="absolute top-full left-0 right-0 glass-dark border border-white/20 shadow-glass rounded-lg mt-1 z-50">
           <div className="p-3 border-b border-gray-100">
-            <h4 className="text-sm font-medium text-gray-900">Recent Searches</h4>
+            <h4 className="text-sm font-medium text-white">Recent Searches</h4>
           </div>
           <div className="py-2">
             {recentSearches.map((search, index) => (
               <button
                 key={index}
                 onClick={() => handleRecentSearch(search)}
-                className="w-full px-3 py-2 text-left hover:bg-gray-50 flex items-center space-x-2"
+                className="w-full px-3 py-2 text-left hover:bg-white/10 flex items-center space-x-2"
               >
-                <Clock size={14} className="text-gray-400" />
-                <span className="text-sm text-gray-700">{search}</span>
+                <Clock size={14} className="text-white/60" />
+                <span className="text-sm text-white/80">{search}</span>
               </button>
             ))}
           </div>
