@@ -1,7 +1,6 @@
 'use client';
 
 import { Bell, Search, User, Smartphone } from 'lucide-react';
-import { Button, Input } from '@cozumel/ui';
 
 export function AdminHeader() {
   return (

@@ -1,6 +1,5 @@
 'use client';
 
-import { Card, CardContent, CardHeader, CardTitle, Badge, Button } from '@cozumel/ui';
 import { Eye, CheckCircle, XCircle, Clock, AlertTriangle, Smartphone } from 'lucide-react';
 
 const mockVerifications = [

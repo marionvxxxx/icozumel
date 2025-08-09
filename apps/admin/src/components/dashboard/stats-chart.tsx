@@ -1,6 +1,5 @@
 'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@cozumel/ui';
 import { TrendingUp } from 'lucide-react';
 
 export function StatsChart() {

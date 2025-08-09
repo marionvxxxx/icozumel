@@ -1,6 +1,5 @@
 'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@cozumel/ui';
 import { Activity, CheckCircle, XCircle, UserPlus, Smartphone, Download } from 'lucide-react';
 
 const activities = [
