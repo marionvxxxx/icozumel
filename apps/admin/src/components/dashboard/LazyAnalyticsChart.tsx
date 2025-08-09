@@ -25,7 +25,7 @@ export function LazyAnalyticsChart() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Analytics Overview</CardTitle>
+        <CardTitle>📊 Analytics Overview</CardTitle>
       </CardHeader>
       <CardContent>
         <Suspense fallback={<ChartSkeleton />}>

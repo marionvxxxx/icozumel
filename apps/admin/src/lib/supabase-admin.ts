@@ -24,10 +24,10 @@ export async function getBusinessVerifications(status?: string) {
       business:businesses(
         id,
         name,
-        ownerId,
+        owner_id,
         category,
-        verifiedTier,
-        owner:users(email, role)
+        verified_tier,
+        owner:profiles(email, role)
       )
     `)
     .order('created_at', { ascending: false });
@@ -55,7 +55,8 @@ export async function updateVerificationStatus(
     .update({
       status,
       notes,
-      reviewedAt: new Date().toISOString(),
+      reviewed_at: new Date().toISOString(),
+      reviewed_by: 'admin', // In production, use actual admin user ID
     })
     .eq('id', verificationId)
     .select()
@@ -69,8 +70,8 @@ export async function updateVerificationStatus(
   if (status === 'APPROVED' && data) {
     const { error: businessError } = await supabaseAdmin
       .from('businesses')
-      .update({ verifiedTier: 'TIER1' })
-      .eq('id', data.businessId);
+      .update({ verified_tier: 'TIER1' })
+      .eq('id', data.business_id);
 
     if (businessError) {
       throw new Error(`Failed to update business tier: ${businessError.message}`);
@@ -87,8 +88,8 @@ export async function getBusinessAnalytics(businessId?: string) {
       id,
       name,
       category,
-      verifiedTier,
-      createdAt,
+      verified_tier,
+      created_at,
       bookings:bookings(count),
       reviews:reviews(count, rating),
       listings:listings(count)
@@ -108,20 +109,20 @@ export async function getBusinessAnalytics(businessId?: string) {
 }
 
 export async function moderateContent(
-  targetId: string,
-  targetType: 'business' | 'listing' | 'review',
+  target_id: string,
+  target_type: 'business' | 'listing' | 'review',
   action: 'approve' | 'reject' | 'flag',
   reason?: string
 ) {
   const { data, error } = await supabaseAdmin
     .from('compliance_checks')
     .insert({
-      targetId,
-      targetType,
+      target_id,
+      target_type,
       type: 'CONTENT_MODERATION',
       result: action === 'approve' ? 'PASSED' : 'FAILED',
       reasons: reason ? [reason] : [],
-      reviewedBy: 'admin', // In real app, use actual admin user ID
+      reviewed_by: 'admin', // In real app, use actual admin user ID
     })
     .select()
     .single();
@@ -134,7 +135,7 @@ export async function moderateContent(
 }
 
 export async function updateFeatureLock(
-  businessId: string,
+  business_id: string,
   feature: string,
   state: 'LOCKED' | 'UNLOCKED' | 'SUSPENDED',
   reason?: string
@@ -142,11 +143,11 @@ export async function updateFeatureLock(
   const { data, error } = await supabaseAdmin
     .from('feature_locks')
     .upsert({
-      businessId,
+      business_id,
       feature,
       state,
       reason,
-      unlockedAt: state === 'UNLOCKED' ? new Date().toISOString() : null,
+      unlocked_at: state === 'UNLOCKED' ? new Date().toISOString() : null,
     })
     .select()
     .single();

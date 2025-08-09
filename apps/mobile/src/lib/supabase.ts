@@ -39,11 +39,11 @@ export async function getVerifiedBusinesses(filters?: {
       hours,
       tags,
       images,
-      verifiedTier,
+      verified_tier,
       featured,
       reviews:reviews(rating)
     `)
-    .neq('verifiedTier', 'TIER0')
+    .neq('verified_tier', 'TIER0')
     .order('featured', { ascending: false })
     .order('created_at', { ascending: false });
 
@@ -74,13 +74,13 @@ export async function getUserBookings(userId: string) {
     .select(`
       id,
       status,
-      timeSlot,
+      time_slot,
       duration,
       quantity,
-      totalAmount,
+      total_amount,
       currency,
       notes,
-      createdAt,
+      created_at,
       listing:listings(
         id,
         title,
@@ -93,8 +93,8 @@ export async function getUserBookings(userId: string) {
         )
       )
     `)
-    .eq('userId', userId)
-    .order('createdAt', { ascending: false });
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false });
 
   if (error) {
     throw new Error(`Failed to fetch bookings: ${error.message}`);
@@ -104,11 +104,11 @@ export async function getUserBookings(userId: string) {
 }
 
 export async function createBooking(bookingData: {
-  listingId: string;
-  timeSlot?: string;
+  listing_id: string;
+  time_slot?: string;
   duration?: number;
   quantity: number;
-  totalAmount: number;
+  total_amount: number;
   notes?: string;
 }) {
   const { data: { user } } = await supabase.auth.getUser();
@@ -121,7 +121,7 @@ export async function createBooking(bookingData: {
     .from('bookings')
     .insert({
       ...bookingData,
-      userId: user.id,
+      user_id: user.id,
       status: 'PENDING',
       currency: 'MXN',
     })
@@ -136,7 +136,7 @@ export async function createBooking(bookingData: {
 }
 
 export async function createReview(reviewData: {
-  businessId: string;
+  business_id: string;
   rating: number;
   title?: string;
   content?: string;
@@ -152,7 +152,7 @@ export async function createReview(reviewData: {
     .from('reviews')
     .insert({
       ...reviewData,
-      userId: user.id,
+      user_id: user.id,
       images: reviewData.images || [],
     })
     .select()
@@ -165,7 +165,7 @@ export async function createReview(reviewData: {
   return data;
 }
 
-export async function getBusinessReviews(businessId: string) {
+export async function getBusinessReviews(business_id: string) {
   const { data, error } = await supabase
     .from('reviews')
     .select(`
@@ -175,11 +175,11 @@ export async function getBusinessReviews(businessId: string) {
       content,
       images,
       helpful,
-      createdAt,
-      user:users(id, email)
+      created_at,
+      user:profiles(id, email)
     `)
-    .eq('businessId', businessId)
-    .order('createdAt', { ascending: false });
+    .eq('business_id', business_id)
+    .order('created_at', { ascending: false });
 
   if (error) {
     throw new Error(`Failed to fetch reviews: ${error.message}`);
@@ -191,9 +191,9 @@ export async function getBusinessReviews(businessId: string) {
 export async function submitBusinessVerification(businessId: string, documents: {
   rfc?: string;
   id?: string;
-  proofOfAddress?: string;
-  storefrontPhoto?: string;
-  businessLicense?: string;
+  proof_of_address?: string;
+  storefront_photo?: string;
+  business_license?: string;
 }) {
   const { data: { user } } = await supabase.auth.getUser();
   
@@ -204,22 +204,22 @@ export async function submitBusinessVerification(businessId: string, documents: 
   // Check if user owns the business
   const { data: business } = await supabase
     .from('businesses')
-    .select('ownerId')
+    .select('owner_id')
     .eq('id', businessId)
     .single();
 
-  if (!business || business.ownerId !== user.id) {
+  if (!business || business.owner_id !== user.id) {
     throw new Error('Unauthorized: You can only verify your own business');
   }
 
   const { data, error } = await supabase
     .from('business_verifications')
     .upsert({
-      businessId,
+      business_id: businessId,
       status: 'PENDING',
       documents,
       checks: {},
-      riskScore: 0,
+      risk_score: 0,
     })
     .select()
     .single();
