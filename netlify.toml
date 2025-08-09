@@ -1,12 +1,12 @@
 [build]
-  command = "cd apps/admin && npm install && npm run build"
+  command = "npm install && npm run build:admin"
   publish = "apps/admin/out"
   base = "."
 
 [build.environment]
   NODE_VERSION = "18"
 
-# Handle client-side routing
+# Handle client-side routing for SPA
 [[redirects]]
   from = "/*"
   to = "/index.html"

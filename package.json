@@ -10,7 +10,7 @@
     "mobile:ios": "pnpm --filter @cozumel/mobile ios",
     "mobile:android": "pnpm --filter @cozumel/mobile android",
     "build": "pnpm --filter @cozumel/admin build",
-    "build:admin": "pnpm --filter @cozumel/admin build",
+    "build:admin": "cd apps/admin && npm install && npm run build",
     "build:mobile": "pnpm --filter @cozumel/mobile build:android && pnpm --filter @cozumel/mobile build:ios",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "typecheck": "tsc --noEmit",
