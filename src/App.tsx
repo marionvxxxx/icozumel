@@ -55,7 +55,7 @@ function App() {
 
   return (
     <AuthContext.Provider value={authState}>
-      <div className={`min-h-screen ${desktop ? 'pl-64' : ''}`}>
+      <div className="min-h-screen">
         {/* Desktop Sidebar */}
         {desktop && (
           <Sidebar 
@@ -93,7 +93,7 @@ function App() {
           </div>
         )}
 
-        <main className={`relative ${desktop ? 'min-h-screen' : mobile ? 'pb-20' : 'pb-4'}`}>
+        <main className={`relative ${desktop ? 'min-h-screen ml-64' : mobile ? 'pb-20' : 'pb-4'}`}>
           {desktop ? (
             <div className="p-8">
               <div className="mb-6">
