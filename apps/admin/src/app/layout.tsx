@@ -1,11 +1,9 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
 import { Providers } from '../components/providers';
 import { AdminSidebar } from '../components/layout/admin-sidebar';
 import { AdminHeader } from '../components/layout/admin-header';
 
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Cozumel Mobile Admin - App & Business Management',
@@ -19,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className="font-sans">
         <Providers>
           <div className="flex h-screen bg-gray-50">
             <AdminSidebar />
