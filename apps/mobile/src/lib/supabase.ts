@@ -41,7 +41,7 @@ export async function getVerifiedBusinesses(filters?: {
       images,
       verified_tier,
       featured,
-      reviews:reviews(rating)
+      reviews!inner(rating)
     `)
     .neq('verified_tier', 'TIER0')
     .order('featured', { ascending: false })

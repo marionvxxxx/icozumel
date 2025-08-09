@@ -21,13 +21,12 @@ export async function getBusinessVerifications(status?: string) {
     .from('business_verifications')
     .select(`
       *,
-      business:businesses(
+      businesses!inner(
         id,
         name,
         owner_id,
         category,
-        verified_tier,
-        owner:profiles(email, role)
+        verified_tier
       )
     `)
     .order('created_at', { ascending: false });
@@ -55,8 +54,7 @@ export async function updateVerificationStatus(
     .update({
       status,
       notes,
-      reviewed_at: new Date().toISOString(),
-      reviewed_by: 'admin', // In production, use actual admin user ID
+      reviewed_at: new Date().toISOString()
     })
     .eq('id', verificationId)
     .select()
