@@ -9,22 +9,11 @@ const nextConfig = {
     unoptimized: true,
   },
   
-  // Ensure proper asset prefix for static export
-  
   // Enable experimental features
   experimental: {
-    // Enable React 18 features
-    appDir: true,
     // Optimize bundle splitting
     optimizePackageImports: ['lucide-react'],
   },
-  
-  // Compiler optimizations
-  compiler: {
-  },
-  
-  // Performance optimizations
-  swcMinify: true,
   
   // TypeScript configuration
   typescript: {
@@ -35,6 +24,7 @@ const nextConfig = {
   
   // ESLint configuration
   eslint: {
+    ignoreDuringBuilds: false,
   }
 }
 
