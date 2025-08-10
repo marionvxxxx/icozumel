@@ -63,14 +63,3 @@ export function handleApiError(error: unknown): NextResponse {
     { status: 500 }
   );
 }
-
-export function createErrorBoundary(fallback: React.ComponentType<{ error: Error }>) {
-  return function ErrorBoundary({ children }: { children: React.ReactNode }) {
-    return (
-      <div>
-        {/* Error boundary implementation would go here */}
-        {children}
-      </div>
-    );
-  };
-}
