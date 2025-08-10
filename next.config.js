@@ -20,6 +20,7 @@ const nextConfig = {
   },
   
   // Compiler optimizations
+  compiler: {
   },
   
   // Performance optimizations
@@ -33,6 +34,8 @@ const nextConfig = {
   },
   
   // ESLint configuration
+  eslint: {
+  }
 }
 
 module.exports = nextConfig
