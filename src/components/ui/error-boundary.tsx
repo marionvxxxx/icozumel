@@ -1,10 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ErrorBoundary as ReactErrorBoundary } from 'react-error-boundary';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
-import { Button } from './button';
-import { Card, CardContent, CardHeader, CardTitle } from './card';
 
 interface ErrorFallbackProps {
   error: Error;
@@ -13,14 +10,14 @@ interface ErrorFallbackProps {
 
 function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
   return (
-    <Card className="max-w-md mx-auto mt-8">
-      <CardHeader>
-        <CardTitle className="flex items-center space-x-2 text-red-600">
+    <div className="max-w-md mx-auto mt-8 rounded-lg border bg-card text-card-foreground shadow-sm">
+      <div className="flex flex-col space-y-1.5 p-6">
+        <h3 className="text-2xl font-semibold leading-none tracking-tight flex items-center space-x-2 text-red-600">
           <AlertTriangle className="h-5 w-5" />
           <span>Something went wrong</span>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
+        </h3>
+      </div>
+      <div className="p-6 pt-0 space-y-4">
         <p className="text-sm text-gray-600">
           We encountered an unexpected error. Please try refreshing the page.
         </p>
@@ -33,12 +30,15 @@ function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
           </details>
         )}
         
-        <Button onClick={resetErrorBoundary} className="w-full">
+        <button 
+          onClick={resetErrorBoundary} 
+          className="w-full inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+        >
           <RefreshCw className="h-4 w-4 mr-2" />
           Try again
-        </Button>
-      </CardContent>
-    </Card>
+        </button>
+      </div>
+    </div>
   );
 }
 
@@ -48,20 +48,28 @@ interface ErrorBoundaryProps {
 }
 
 export function ErrorBoundary({ children, fallback }: ErrorBoundaryProps) {
-  return (
-    <ReactErrorBoundary
-      FallbackComponent={fallback || ErrorFallback}
-      onError={(error, errorInfo) => {
-        console.error('Error caught by boundary:', error, errorInfo);
-        // Send to error reporting service
-        if (typeof window !== 'undefined' && window.Sentry) {
-          window.Sentry.captureException(error, {
-            contexts: { errorBoundary: errorInfo },
-          });
-        }
-      }}
-    >
-      {children}
-    </ReactErrorBoundary>
-  );
+  const [hasError, setHasError] = React.useState(false);
+  const [error, setError] = React.useState<Error | null>(null);
+
+  React.useEffect(() => {
+    const handleError = (error: ErrorEvent) => {
+      setHasError(true);
+      setError(new Error(error.message));
+    };
+
+    window.addEventListener('error', handleError);
+    return () => window.removeEventListener('error', handleError);
+  }, []);
+
+  const resetErrorBoundary = () => {
+    setHasError(false);
+    setError(null);
+  };
+
+  if (hasError && error) {
+    const FallbackComponent = fallback || ErrorFallback;
+    return <FallbackComponent error={error} resetErrorBoundary={resetErrorBoundary} />;
+  }
+
+  return <>{children}</>;
 }
