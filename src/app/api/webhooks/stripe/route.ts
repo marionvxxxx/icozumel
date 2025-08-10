@@ -1,7 +1,5 @@
-@@ .. @@
- import { handleStripeWebhook } from '@/lib/stripe-webhook-handler';
+import { handleStripeWebhook } from '@/lib/stripe-webhook-handler';
 
--export async function POST(request: Request) {
-+export async function POST(request: NextRequest) {
-   return handleStripeWebhook(request);
- }
+export async function POST(request: NextRequest) {
+  return handleStripeWebhook(request);
+}
