@@ -12,21 +12,20 @@ const nextConfig = {
   // Ensure proper asset prefix for static export
   assetPrefix: '',
   
-  // Enable Turbopack for development and production optimizations
-  experimental: {
-    // Enable Turbopack for faster builds
-    turbo: {
-      rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.js',
-        },
+  // Enable Turbopack for faster builds
+  turbopack: {
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
       },
     },
-    // Enable React 19 features when available
-    reactCompiler: true,
+  },
+  
+  // Enable experimental features
+  experimental: {
     // Optimize bundle splitting
-    optimizePackageImports: ['@cozumel/ui', 'lucide-react'],
+    optimizePackageImports: ['lucide-react'],
   },
   
   // Compiler optimizations
@@ -35,12 +34,18 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === 'production',
   },
   
-  // Performance optimizations
-  swcMinify: true,
+  // TypeScript configuration
+  typescript: {
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    ignoreBuildErrors: false,
+  },
   
-  // Enable ISR for specific pages
-  async generateStaticParams() {
-    return [];
+  // ESLint configuration
+  eslint: {
+    // Warning: This allows production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: false,
   },
 }
 

@@ -10,7 +10,6 @@ const nextConfig = {
   },
   
   // Ensure proper asset prefix for static export
-  assetPrefix: '',
   
   // Enable experimental features
   experimental: {
@@ -21,9 +20,6 @@ const nextConfig = {
   },
   
   // Compiler optimizations
-  compiler: {
-    // Remove console.log in production
-    removeConsole: process.env.NODE_ENV === 'production',
   },
   
   // Performance optimizations
@@ -37,11 +33,6 @@ const nextConfig = {
   },
   
   // ESLint configuration
-  eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
-    ignoreDuringBuilds: false,
-  },
 }
 
 module.exports = nextConfig
