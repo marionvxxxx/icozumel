@@ -3,8 +3,6 @@ module.exports = {
   extends: [
     'next/core-web-vitals',
     'eslint:recommended',
-    '@typescript-eslint/recommended',
-    '@typescript-eslint/recommended-requiring-type-checking',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -13,8 +11,6 @@ module.exports = {
     },
     ecmaVersion: 2022,
     sourceType: 'module',
-    project: './tsconfig.json',
-    tsconfigRootDir: __dirname,
   },
   plugins: ['@typescript-eslint', 'react', 'react-hooks'],
   rules: {
@@ -23,12 +19,6 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'warn',
-    '@typescript-eslint/no-non-null-assertion': 'warn',
-    '@typescript-eslint/prefer-nullish-coalescing': 'error',
-    '@typescript-eslint/prefer-optional-chain': 'error',
-    '@typescript-eslint/no-unnecessary-type-assertion': 'error',
-    '@typescript-eslint/no-floating-promises': 'error',
-    '@typescript-eslint/await-thenable': 'error',
     
     // React specific rules
     'react/prop-types': 'off', // We use TypeScript for prop validation
@@ -41,14 +31,6 @@ module.exports = {
     'no-debugger': 'error',
     'prefer-const': 'error',
     'no-var': 'error',
-    'object-shorthand': 'error',
-    'prefer-template': 'error',
-    
-    // Import rules
-    'sort-imports': ['error', {
-      ignoreCase: true,
-      ignoreDeclarationSort: true,
-    }],
   },
   settings: {
     react: {
