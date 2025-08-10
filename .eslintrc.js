@@ -1,23 +1,22 @@
 module.exports = {
   root: true,
   extends: [
-    '@react-native-community',
+    'next/core-web-vitals',
     'eslint:recommended',
     '@typescript-eslint/recommended',
     '@typescript-eslint/recommended-requiring-type-checking',
-    'prettier',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 2020,
+    ecmaVersion: 2022,
     sourceType: 'module',
-    project: ['./tsconfig.json', './apps/*/tsconfig.json', './packages/*/tsconfig.json'],
+    project: './tsconfig.json',
     tsconfigRootDir: __dirname,
   },
-  plugins: ['@typescript-eslint', 'react', 'react-hooks', 'react-native'],
+  plugins: ['@typescript-eslint', 'react', 'react-hooks'],
   rules: {
     // TypeScript specific rules
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
@@ -46,24 +45,10 @@ module.exports = {
     'prefer-template': 'error',
     
     // Import rules
-    'import/order': [
-      'error',
-      {
-        groups: [
-          'builtin',
-          'external',
-          'internal',
-          'parent',
-          'sibling',
-          'index',
-        ],
-        'newlines-between': 'always',
-        alphabetize: {
-          order: 'asc',
-          caseInsensitive: true,
-        },
-      },
-    ],
+    'sort-imports': ['error', {
+      ignoreCase: true,
+      ignoreDeclarationSort: true,
+    }],
   },
   settings: {
     react: {
@@ -71,10 +56,9 @@ module.exports = {
     },
   },
   env: {
-    'react-native/react-native': true,
-    es6: true,
+    browser: true,
+    es2022: true,
     node: true,
-    jest: true,
   },
   overrides: [
     {
@@ -85,13 +69,6 @@ module.exports = {
       rules: {
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/no-non-null-assertion': 'off',
-      },
-    },
-    {
-      files: ['**/*.stories.{ts,tsx}'],
-      rules: {
-        '@typescript-eslint/no-explicit-any': 'off',
-        'import/no-anonymous-default-export': 'off',
       },
     },
   ],

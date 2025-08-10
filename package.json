@@ -1,37 +1,39 @@
 {
   "name": "cozumel-mobile-marketplace",
   "private": true,
-  "version": "1.0.0",
-  "description": "Mobile marketplace for Cozumel businesses - iOS and Android apps with admin management",
-  "scripts": {
+    "next": "14.2.15",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "dev:admin": "pnpm --filter @cozumel/admin dev",
     "dev:mobile": "pnpm --filter @cozumel/mobile start",
     "mobile:web": "pnpm --filter @cozumel/mobile web",
-    "mobile:ios": "pnpm --filter @cozumel/mobile ios",
-    "mobile:android": "pnpm --filter @cozumel/mobile android",
-    "build": "pnpm --filter @cozumel/admin build",
-    "build:admin": "cd apps/admin && npm install && npm run build",
-    "build:mobile": "pnpm --filter @cozumel/mobile build:android && pnpm --filter @cozumel/mobile build:ios",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
-    "typecheck": "tsc --noEmit",
-    "clean": "rm -rf node_modules && rm -rf apps/admin/node_modules && rm -rf apps/mobile/node_modules && rm -rf packages/ui/node_modules && rm -rf packages/database/node_modules && rm -rf packages/i18n/node_modules",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
-    "db:generate": "cd packages/database && npm run db:generate",
-    "db:push": "cd packages/database && npm run db:push",
-    "db:seed": "cd packages/database && npm run db:seed",
-    "start:admin": "pnpm --filter @cozumel/admin start",
-    "start:mobile": "pnpm --filter @cozumel/mobile start"
-  },
-  "workspaces": [
+    "@radix-ui/react-accordion": "^1.2.1",
+    "@radix-ui/react-alert-dialog": "^1.1.2",
+    "@radix-ui/react-avatar": "^1.1.1",
+    "@radix-ui/react-checkbox": "^1.1.2",
+    "@radix-ui/react-dialog": "^1.1.2",
+    "@radix-ui/react-dropdown-menu": "^2.1.2",
+    "@radix-ui/react-label": "^2.1.0",
+    "@radix-ui/react-popover": "^1.1.2",
+    "@radix-ui/react-progress": "^1.1.0",
+    "@radix-ui/react-select": "^2.1.2",
+    "@radix-ui/react-separator": "^1.1.0",
+    "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-switch": "^1.1.1",
+    "@radix-ui/react-tabs": "^1.1.1",
+    "@radix-ui/react-toast": "^1.2.2",
     "apps/*",
-    "packages/*"
+    "tailwindcss-animate": "^1.0.7",
+    "@supabase/supabase-js": "^2.45.4",
+    "react-error-boundary": "^4.0.13",
+    "zod": "^3.23.8"
   ],
   "devDependencies": {
-    "@types/node": "^20.10.5",
-    "@typescript-eslint/eslint-plugin": "^6.15.0",
-    "@typescript-eslint/parser": "^6.15.0",
-    "eslint": "^8.56.0",
-    "eslint-config-expo": "^7.0.0",
+    "@types/node": "^20.17.6",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "14.2.15",
     "prettier": "^3.1.1",
     "typescript": "^5.9.0"
   },
@@ -50,7 +52,7 @@
   "author": "Cozumel Marketplace Team",
   "license": "MIT",
   "engines": {
-    "node": ">=18.17.0",
-    "npm": ">=8.0.0"
+    "tailwindcss": "^3.4.14",
+    "typescript": "^5.6.3"
   }
 }
