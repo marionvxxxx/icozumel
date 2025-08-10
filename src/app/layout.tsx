@@ -8,12 +8,14 @@
 +import { ErrorBoundary } from '@/components/ui/error-boundary';
 
  export const metadata: Metadata = {
+ }
 @@ .. @@
    return (
      <html lang="en">
        <body className="font-sans">
 +        {/* Sentry Error Tracking */}
 +        <Script
+   )
 +          src="https://browser.sentry-cdn.com/7.118.0/bundle.tracing.min.js"
 +          strategy="beforeInteractive"
 +        />
